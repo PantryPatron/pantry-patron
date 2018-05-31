@@ -1,11 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
 
+import $ from 'jquery';
+const Test = () => (<div>Testing this shiz out </div>);
 const App = () => (
-  <div>
-    <p>Hey root folder</p>
-  </div>
+  <Router>
+    <Switch>
+      <Route exact path='/' component={Test}/>
+    </Switch>
+  </Router>
 );
 
 ReactDOM.render(<App />, document.getElementById('app'));
