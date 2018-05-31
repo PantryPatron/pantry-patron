@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 
 // establish connection
 const uri = process.env.MONGOOSE_URI || 'mongodb://localhost/pantry-patron'
-const db = mongoose.connect(uri, {useMongoClient: true});
-
+mongoose.connect(uri);
+const db = mongoose.connection;
 // feedback from database connection
-db.on('error', console.error.bind(console, 'No connection established to database'));
+db.on('error', function() {
+  console.log('No connection to database');
+});
 db.once('open',function() {
   console.log('Database connection established');
 });

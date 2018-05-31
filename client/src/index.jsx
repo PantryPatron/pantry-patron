@@ -2,11 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-import View from './components/View.jsx';
-
 const App = () => (
   <div>
-    <View />
+    <p>Hey root folder</p>
   </div>
 );
 
