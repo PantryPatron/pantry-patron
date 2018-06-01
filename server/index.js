@@ -8,7 +8,8 @@ const app = express();
 const path = require('path');
 const bcrypt = require('bcrypt');
 
-const saltRounds = 10; // Difficulty to crack (Incrementing doubles compute time) (agreed)
+const saltRounds = 10; // Difficulty to crack (Incrementing doubles compute time)
+const User = require('../database/schemas/UserSchema.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -107,14 +108,24 @@ app.post('/register', (req, res) => {
 });
 
 // ajax call to server to create new user in DB
+app.post('/login', function(req, res) {
+  var newUser = new User(req.body);
+  // console.log('new user: ', newUser)
+  newUser.save()
+  .then(function(user) {
+    res.end('User saved to database');
+  })
+  .catch(function(err) {
+    res.status(400).end('Unable to save user to database');
+  })
+});
+
 
 // add new categories into DB if not found in DB
 
-// grocery lists
+// grocery lists endpoint
 
-// create express sessions
 
-// handle logout to route to login page
 
 const port = process.env.PORT || 3000;
 
