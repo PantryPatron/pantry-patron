@@ -106,6 +106,16 @@ app.post('/register', (req, res) => {
   }
 });
 
+// ajax call to server to create new user in DB
+
+// add new categories into DB if not found in DB
+
+// grocery lists
+
+// create express sessions
+
+// handle logout to route to login page
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
