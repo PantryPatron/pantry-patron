@@ -4,9 +4,9 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // name
-      // quantity
-      // price
+      name: 'susance',
+      quantity: 21,
+      price: 12
     }
     // bindings
   }

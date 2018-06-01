@@ -6,7 +6,7 @@ class Home extends React.Component {
 
     this.state = {
       lists: props.lists || [],
-      selected: props.selected,
+      selected: props.selected || {name: 'slkjsi', total_price: 12},
       onEdit: props.onEdit,
     };
   }
@@ -32,7 +32,7 @@ class Home extends React.Component {
             }
           </select>
           <div>
-            <p>Grocery List {this.state.selected.name} totals ${this.state.selected.total-price}</p>
+            <p>Grocery List {this.state.selected.name} totals ${this.state.selected.total_price}</p>
             {
               this.state.selected.items.map((item, index) => {
                 return <p>{item.name}</p>
