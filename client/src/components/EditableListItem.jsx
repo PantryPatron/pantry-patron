@@ -9,7 +9,7 @@ class EditableListItem extends React.Component {
     // bindings
 
     /*
-      DONT THINK WE NEEDS THESE
+      IF YOU USE THESE MAKE SURE WHEN YOU CALL THEM DONT BIND THEM AGAIN
     */
     this.handleEdit = this.handleEdit.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);

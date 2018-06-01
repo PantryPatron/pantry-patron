@@ -88,6 +88,6 @@ ReactDOM.render(<App />, document.getElementById('app'));
 /logout
 /list
 
-------------> How about we add a /list/edit  <-----  new challenge!!!!!!
+------------> think about we add a /list/edit  <-----  new challenge!!!!!!
 
 */
