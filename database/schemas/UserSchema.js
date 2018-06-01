@@ -27,7 +27,6 @@ var UserSchema = Schema({
     unique: true,
     required: true
   },
-  salt: String,
   hash: String,
   grocery_lists: [{
     type: Schema.Types.ObjectId,
