@@ -6,7 +6,7 @@ class Home extends React.Component {
 
     this.state = {
       lists: props.lists || [],
-      selected: props.selected || {name: 'slkjsi', total_price: 12},
+      selected: props.selected || {name: 'slkjsi', total_price: 12, items: []},
       onEdit: props.onEdit,
     };
   }
