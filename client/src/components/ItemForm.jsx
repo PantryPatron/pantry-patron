@@ -4,11 +4,15 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'susance',
-      quantity: 21,
-      price: 12
+      name: 'Apples' || '',
+      quantity: 5 || 0,
+      price: 0.50 || 0
     }
     // bindings
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleQuantChange = this.handleQuantChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   // handle value changes
@@ -27,10 +31,10 @@ class ItemForm extends React.Component {
   // handle submit of edit
   handleSubmit() {
     this.props.onFormSubmit({
-      // id
-      // name
-      // quantity
-      // price
+      // id: this.props.item.id,
+      // name: this.state.name,
+      // quantity: this.state.quantity,
+      // price: this.state.price
     });
   }
 
@@ -38,31 +42,34 @@ class ItemForm extends React.Component {
     <div>
       <h4>Edit/Create Item</h4>
 
-      <div className='field'>
-        <label>Item Name</label>
-        <input
-          type='text'
-          value={this.state.name}
-          onChange={this.handleNameChange}
-        />
-      </div>
+      <div className='row'>
+        <div className='column'>
+          <label>Item Name</label>
+          <input
+            type='text'
+            value={this.state.name}
+            onChange={this.handleNameChange}
+          />
+        </div>
 
-      <div className='field'>
-        <label>Quantity</label>
-        <input
-          type='number'
-          value={this.state.quantity}
-          onChange={this.handleQuantChange}
-        />
-      </div>
+        <div className='column'>
+          <label>Quantity</label>
+          <input
+            type='number'
+            value={this.state.quantity}
+            onChange={this.handleQuantChange}
+          />
+        </div>
 
-      <div className='field'>
-        <label>Price</label>
-        <input
-          type='number'
-          value={this.state.price}
-          onChange={this.handlePriceChange}
-        />
+        <div className='column'>
+          <label>Price</label>
+
+          <input
+            type='number'
+            value={this.state.price}
+            onChange={this.handlePriceChange}
+          />
+        </div>
       </div>
 
       <div>
