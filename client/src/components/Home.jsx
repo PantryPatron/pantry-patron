@@ -16,7 +16,7 @@ class Home extends React.Component {
       <div>
         <div>
           <div>
-            <p>Chat here</p>
+            <p>Chart here</p>
           </div>
           <div>
             <p>Verbal Stats Here</p>

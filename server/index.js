@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const database = require('../database/index.js');
 const app = express();
 const path = require('path');
+// WE NEED BCRYPT HERE TOO
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

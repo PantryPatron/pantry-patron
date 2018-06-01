@@ -7,6 +7,10 @@ class EditableListItem extends React.Component {
       editFormOpen = false;
     }
     // bindings
+
+    /*
+      DONT THINK WE NEEDS THESE
+    */
     this.handleEdit = this.handleEdit.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleFormClose = this.handleFormClose.bind(this);
@@ -43,7 +47,9 @@ class EditableListItem extends React.Component {
   render() {
     if (this.state.editFormOpen) {
       return (
-        <div></div>
+        <div>
+          {/**/}
+        </div>
       );
     } else {
       return (

@@ -19,7 +19,7 @@ User data example
   last-login: timestamp,
   failed-login-attempts: #
 }
-
+ADD MOST FREQUENTED CATEGORY
 */
 var UserSchema = Schema({
   username: {
