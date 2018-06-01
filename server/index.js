@@ -57,6 +57,7 @@ app.post('/login', (req, res) => {
 
 app.post('/logout', (req, res) => {
   // Remove user
+  res.session.destroy();
 });
 
 app.post('/register', (req, res) => {
