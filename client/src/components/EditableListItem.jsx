@@ -7,10 +7,6 @@ class EditableListItem extends React.Component {
       editFormOpen = false;
     }
     // bindings
-
-    /*
-      IF YOU USE THESE MAKE SURE WHEN YOU CALL THEM DONT BIND THEM AGAIN
-    */
     this.handleEdit = this.handleEdit.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleFormClose = this.handleFormClose.bind(this);
@@ -47,13 +43,20 @@ class EditableListItem extends React.Component {
   render() {
     if (this.state.editFormOpen) {
       return (
-        <div>
-          {/**/}
-        </div>
+        <ItemForm
+          item={this.props.item}
+          onFormSubmit={this.handleSubmit}
+          onFormClose={this.handleFormClose}
+        />
       );
     } else {
       return (
-        <div></div>
+       <ListItem
+          item={this.props.item}
+          id={this.props.item.id}
+          onEditClick={this.handleEditClick}
+          onTrashClick={this.props.onTrashClick}
+        />
       );
     }
   }
