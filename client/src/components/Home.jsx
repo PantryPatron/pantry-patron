@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Nav from './Navigation.jsx';
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,8 @@ class Home extends React.Component {
   render() {
     return (
       <div>
+        <Nav/>
+        <br/>
         <div>
           <div>
             <p>Chart here</p>
@@ -22,7 +25,7 @@ class Home extends React.Component {
             <p>Verbal Stats Here</p>
           </div>
         </div>
-        <div>
+        {/*<div>
           <h1>Grocery Lists</h1>
           <select>
             {
@@ -40,7 +43,7 @@ class Home extends React.Component {
             }
             <input type="button" value="Edit" onClick={this.state.onEdit}/>
           </div>
-        </div>
+        </div>*/}
       </div>
     );
   }
