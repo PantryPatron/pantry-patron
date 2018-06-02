@@ -8,6 +8,8 @@ const app = express();
 const path = require('path');
 const bcrypt = require('bcrypt');
 
+const saltRounds = 10; // Difficulty to crack (Incrementing doubles compute time)
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -44,29 +46,59 @@ app.get('*', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  // Validate user
-  const user = req.body.user;
-  const password = req.body.password;
+  const { username, password } = req.body.user;
 
-  if (user && password) {
+  // If user
+  if (username && password) {
+    database.find(username)
+      .then(async ({ hash }) => {
+        const isValiduser = await bcrypt.compare(password, hash);
 
+        return {
+          hash,
+          isValidUser: isValiduser,
+        };
+      })
+      .then(({ hash, isValidUser }) => {
+        if (!isValidUser) {
+          res.redirect('/login');
+        }
+
+        res.session.username = username;
+        res.session.hash = hash;
+      });
   } else {
     res.redirect('/login');
   }
 });
 
-app.post('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   // Remove user
   res.session.destroy();
+  res.redirect('/login');
 });
 
 app.post('/register', (req, res) => {
-  // Create new user
-  const user = req.body.user;
-  const password = req.body.password;
+  const { username, password } = req.body;
 
-  if (user && password) {
+  // If user
+  if (username && password) {
+    bcrypt.hash(password, saltRounds)
+      .then(async hash => (
+        database.save({
+          username,
+          hash,
+          grocery_list: [],
+          last_login: new Date(),
+          failed_login_attempts: 0,
+        })
+      ))
+      .then((hash) => {
+        req.session.username = username;
+        req.session.hash = hash;
 
+        res.redirect('/');
+      });
   } else {
     res.redirect('/register');
   }
