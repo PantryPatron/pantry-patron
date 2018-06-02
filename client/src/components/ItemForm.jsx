@@ -4,9 +4,9 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Apples' || '',
-      quantity: 5 || 0,
-      price: 0.50 || 0
+      name: '',
+      quantity: 'quantity',
+      price: 'price'
     }
     // bindings
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -17,15 +17,18 @@ class ItemForm extends React.Component {
 
   // handle value changes
   handleNameChange(e) {
+    // console.log(e.target.value, 'was entered')
     this.setState({name: e.target.value});
   }
 
   handleQuantChange(e) {
+    // console.log('new qty', e.target.value);
     this.setState({quantity: e.target.value});
   }
 
   handlePriceChange(e) {
-    this.setState({price: e.target.value});
+    // console.log('new price', e.target.value);
+    this.setState({price: Number(e.target.value).toFixed(2)});
   }
 
   // handle submit of edit
@@ -39,44 +42,15 @@ class ItemForm extends React.Component {
   }
 
   render() {
-    <div>
-      <h4>Edit/Create Item</h4>
-
-      <div className='row'>
-        <div className='column'>
-          <label>Item Name</label>
-          <input
-            type='text'
-            value={this.state.name}
-            onChange={this.handleNameChange}
-          />
-        </div>
-
-        <div className='column'>
-          <label>Quantity</label>
-          <input
-            type='number'
-            value={this.state.quantity}
-            onChange={this.handleQuantChange}
-          />
-        </div>
-
-        <div className='column'>
-          <label>Price</label>
-
-          <input
-            type='number'
-            value={this.state.price}
-            onChange={this.handlePriceChange}
-          />
-        </div>
-      </div>
-
+    return(
       <div>
-        <button onClick={this.handleSubmit}>Submit Item</button>
-        <button onClick={this.props.onFormClose}>Cancel</button>
+        <form>
+          <input type="text" placeholder="Enter an item..." name="item" value={this.state.name} onChange={this.handleNameChange}/>
+          <input type="number" placeholder="Quantity" name="quantity" value={this.state.quantity} onChange={this.handleQuantChange}/>
+          <input type="number" placeholder="Price" name="price" step="any" value={this.state.price} onChange={this.handlePriceChange}/>
+        </form>
       </div>
-    </div>
+    );
   }
 }
 
@@ -85,22 +59,7 @@ export default ItemForm;
 
 
 /*
-             +------------------+
-   ITEM NAME |                  |
-             +------------------+
-
-             +------------------+
-    QUANTITY |                  |
-             +------------------+
-
-             +------------------+
-       PRICE |                  |
-             +------------------+
-
-              VS
-
 +-----------+  +---+  +-------+
 | ITEM NAME |  |QTY|  | PRICE |
 +-----------+  +---+  +-------+
-
 */
