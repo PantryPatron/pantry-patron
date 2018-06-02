@@ -9,7 +9,7 @@ const path = require('path');
 
 const bcrypt = require('bcrypt');
 
-const saltRounds = 10; // Difficulty to crack (Incrementing doubles compute time)
+const saltRounds = 10; // Difficulty  to crack (Incrementing doubles compute time)
 const User = require('../database/schemas/UserSchema.js');
 
 
