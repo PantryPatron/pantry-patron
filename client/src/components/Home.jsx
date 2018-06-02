@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Nav from './Navigation.jsx';
+import NavBar from './Navigation.jsx';
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <Nav/>
+        <NavBar/>
         <br/>
         <div>
           <div>
