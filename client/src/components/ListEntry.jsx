@@ -1,6 +1,8 @@
 import React from 'react';
 
 import ListItemEntry from './ListItemEntry.jsx';
+import ItemForm from './ItemForm.jsx';
+
 class ListEntry extends React.Component {
   constructor(props) {
     super(props);
@@ -11,11 +13,11 @@ class ListEntry extends React.Component {
         <div>
           <h3>{this.props.list.name}</h3>
           <br/>
-          <tr>
+         {/* <tr>
             <th>Item</th>
             <th>Qty</th>
             <th>Price</th>
-          </tr>
+          </tr>*/}
           {
             // console.log('these are the items', this.state.items)
             this.props.list.items.map((item) => {
@@ -23,6 +25,8 @@ class ListEntry extends React.Component {
               return <ListItemEntry key={item._id} item={item}/>
             })
           }
+          <br/>
+          <ItemForm />
         </div>
       );
   } // end render
