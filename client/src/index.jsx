@@ -17,7 +17,6 @@ import Register from './components/Register.jsx';
 import Logout from './components/Logout.jsx';
 import Lists from './components/Lists.jsx';
 // WE NEED TO DOWNLOAD AND IMPORT BCRYPT
-import ItemForm from './components/ItemForm.jsx'
 
 class App extends React.Component{
   constructor(props) {
@@ -63,6 +62,7 @@ class App extends React.Component{
   }
 
   render() {
+    var test = {name: 'test'};
     return (
       <Router>
         <Switch>
@@ -71,8 +71,8 @@ class App extends React.Component{
           <Route exact path='/register' component={Register}/>
           <Route exact path='/logout' component={Logout}/>
           <Route exact path='/lists' component={Lists}/>
-          <Route exact path='/test' component={ItemForm}/>
-        </Switch>
+{/*          <Route exact path='/test' component={}/>
+*/}        </Switch>
       </Router>
     );
   } // end render
