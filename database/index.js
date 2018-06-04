@@ -42,10 +42,6 @@ var saveCategory = function(category) {
   })
 }
 
-var find = function() {
- console.log('inside find function (DB)');
-};
-
 var updateList = function() {
   var newList = new GroceryList(req.body);
   var name = newList.name;
@@ -68,9 +64,17 @@ var updateList = function() {
   }).catch(err => console.error(err));
 }
 
+var find = function() {
+ console.log('inside find function (DB)');
+};
+
 module.exports.saveUser = saveUser;
 module.exports.saveCategory = saveCategory;
+
 module.exports.find = find;
 module.exports.storeSearch = Store.find;
 module.exports.storeSave = Store.save;
+
+
 module.exports.updateList = updateList;
+module.exports.find = find;

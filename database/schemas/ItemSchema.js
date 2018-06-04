@@ -9,11 +9,12 @@ const ItemSchema = Schema({
   },
   category_id: {
     type: Schema.Types.ObjectId,
-    ref: 'Categories',
+    ref: 'Categories'
   },
-  price: {
-    type: Number,
-  },
+  store: {
+    type: Schema.Types.ObjectId,
+    ref: 'Store'
+  }
 });
 
 module.exports = mongoose.model('Items', ItemSchema);
