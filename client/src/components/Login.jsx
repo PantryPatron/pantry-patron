@@ -13,7 +13,7 @@ class Login extends React.Component {
   verifyCredentials(e) {
     e.preventDefault();
     // console.log(this.state.username, this.state.password)
-    this.props.verify(this.state);
+    this.props.verify(this.state, (loc) => (this.props.history.push(loc)) );
   }
 
   handleUsernameChange(e) {
