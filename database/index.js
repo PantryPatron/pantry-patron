@@ -32,7 +32,7 @@ var saveUser = function(user) {
 };
 
 var saveCategory = function(category) {
-  var newCategory = new Category(req.body);
+  var newCategory = new Category(category.body);
   newCategory.save()
   .then(function(category) {
     res.end('Category saved to database');
@@ -42,8 +42,8 @@ var saveCategory = function(category) {
   })
 }
 
-var updateList = function() {
-  var newList = new GroceryList(req.body);
+var updateList = function(list) {
+  var newList = new GroceryList(list.body);
   var name = newList.name;
   List.findOne({name: name}, function(noList, listExists) {
     // list doesn't exist
@@ -64,6 +64,14 @@ var updateList = function() {
   }).catch(err => console.error(err));
 }
 
+var addItemToList = function(item) {
+  var newItem = new Items(item.body);
+  newItem.save(function(err) {
+    if (err) return handleError(err);
+    return 'Item saved to database'
+  })
+}
+
 var find = function() {
  console.log('inside find function (DB)');
 };
@@ -77,4 +85,5 @@ module.exports.storeSave = Store.save;
 
 
 module.exports.updateList = updateList;
+module.exports.addItemToList = addItemToList;
 module.exports.find = find;

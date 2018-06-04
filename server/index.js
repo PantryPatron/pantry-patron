@@ -113,7 +113,7 @@ app.post('/register', (req, res) => {
 
 // add new categories into DB if not found in DB
 app.post('/category/create', function(req, res) {
-  database.saveCategory()
+  database.saveCategory(req)
   .then(function(category) {
     res.end('Create category in database')
   })
@@ -124,13 +124,17 @@ app.post('/category/create', function(req, res) {
 
 
 app.post('/lists/update', function(req, res) {
-  database.updateList()
+  database.updateList(req)
   .then(function(list) {
     res.end('Updated list in database')
   })
   .catch(function(err) {
     res.status(400).end('Unable to update list in database');
   })
+});
+
+app.post('/item/add', function(req, res) {
+  // add item to database list
 });
 
 

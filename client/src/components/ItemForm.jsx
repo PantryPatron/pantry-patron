@@ -49,6 +49,11 @@ class ItemForm extends React.Component {
           <input type="number" placeholder="Quantity" name="quantity" value={this.state.quantity} onChange={this.handleQuantChange}/>
           <input type="number" placeholder="Price" name="price" step="any" value={this.state.price} onChange={this.handlePriceChange}/>
         </form>
+        <div>
+          <button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-plus"></span> Add Item to Cart
+          </button>
+        </div>
       </div>
     );
   }
