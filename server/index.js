@@ -8,13 +8,13 @@ const app = express();
 const path = require('path');
 const bcrypt = require('bcrypt');
 
-const saltRounds = 10; // Difficulty to crack (Incrementing doubles compute time)
+const saltRounds = 10; // Difficulty to crack (Incrementing doubles compute time) (agreed)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || '0979zx7v6vvq0398ubvq7w6dc8c7z5rvg7i1',
   cookie: {},
 }));
 
@@ -46,7 +46,7 @@ app.get('*', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const { username, password } = req.body.user;
+  const { username, password } = req.body.user; // might only be req.body
 
   // If user
   if (username && password) {
@@ -80,7 +80,9 @@ app.get('/logout', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
-
+  /*
+  What happens when a username already exists?
+  */
   // If user
   if (username && password) {
     bcrypt.hash(password, saltRounds)
