@@ -21,7 +21,7 @@ const Category = require('./schemas/CategorySchema.js');
 const Store = require('./schemas/StoreSchema.js');
 
 const save = (user) => {
-  let test = new User(user);
+  const test = new User(user);
 
   test.save((err) => {
     if (err) throw err;
@@ -36,3 +36,5 @@ const find = () => {
 
 module.exports.save = save;
 module.exports.find = find;
+module.exports.storeSearch = Store.find;
+module.exports.storeSave = Store.save;
