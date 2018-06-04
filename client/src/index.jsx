@@ -41,19 +41,6 @@ class App extends React.Component {
     });
   } // end verify
 
-  logout() {
-    $.ajax({
-      url: 'http://localhost:3000/logout',
-      type: 'GET',
-      success: (response) => {
-        console.log('User logged out' , response);
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-  } // end logout
-
   sendNewUserCredentials(newUserCreds) {
     /*
       maybe create an endpoint in the server that saves new user info to db
@@ -86,14 +73,13 @@ class App extends React.Component {
 
   render() {
     var grabCredentials = this.sendNewUserCredentials.bind(this);
-    var logout = this.logout.bind(this);
 
     const test = { name: 'test' };
     return (
       <Router>
         <Switch>
           <Route exact path="/" render={(props)=>(
-            <Home logout={logout} {...props}/>
+            <Home {...props}/>
           )} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" render={() => (<Register grabUserCredentials={grabCredentials}/>)} />
