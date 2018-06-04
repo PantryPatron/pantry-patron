@@ -55,7 +55,6 @@ app.post('/login', (req, res) => {
 
   // If user
   if (username && password) {
-    console.log(database.find)
     var db = User.find({username}).exec();
 
     db.then(async (user) => {
@@ -73,8 +72,7 @@ app.post('/login', (req, res) => {
         req.session.username = username;
         req.session.hash = hash;
 
-        console.log(req.session)
-        res.end('/');
+        res.end('\/');
       });
   } else {
     res.end('/login');
