@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+
 class Register extends React.Component {
   constructor(props){
     super(props);
@@ -17,7 +18,9 @@ class Register extends React.Component {
 
     if(match){
       // send username and pasword information to callback  to be processed later
-      callback({username: this.state.username, password: this.state.entry});
+      callback({username: this.state.username, password: this.state.entry}, (loc)  => {
+        this.props.history.push(loc);
+      });
       // console.log(this.state.username, this.state.entry, 'was saved.')
     } else {
       // figure out how to display a div of color red
