@@ -16,7 +16,7 @@ class Home extends React.Component {
     return (
       <div>
     {/*{...this.props passes down match and history}*/}
-        <NavBar logout={this.props.logout} {...this.props}/>
+        <NavBar {...this.props}/>
         <br/>
         <div>
           <div>
