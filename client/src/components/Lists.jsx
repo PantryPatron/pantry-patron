@@ -10,7 +10,7 @@ class Lists extends React.Component{
       userLists : this.props.lists || [{items: [{name: 'apples', category_id: 12},{name: 'corn', category_id: 13}], name: 'Walmart', total_price: 25.89}, {items: [], name: 'Kmart', total_price: 25.89}, {items: [], name: 'Target', total_price: 25.89}],
       selectedList: {name: null, items: []}
     };
-
+    console.log('stores', this.props.stores)
     this.state.userLists['x'] = {name: null, items: []};
   }
 
@@ -21,13 +21,17 @@ class Lists extends React.Component{
   }
 
   render() {
-    var display = !!this.state.selectedList.name ? <ListEntry id='list' list={this.state.selectedList} /> : <div id='warning'>Select a list from the<br/>from drop down menu</div>;
+    var display = !!this.state.selectedList.name ?
+     <ListEntry stores={this.props.stores} id='list' list={this.state.selectedList} /> :
+     <div id='warning'>Select a list from the<br/>from drop down menu</div>;
+
     return (
       <div>
       <NavBar/>
       <br/>
         <select onChange={this.handleListSelect.bind(this)}>
-          <option value='x' key='x'> select </option>
+          <option value='x' key='x'> Select </option>
+          <option value='new' key='new'>New list</option>
           {
             this.state.userLists.map((list, index) => {
               return <option value={index} key={index}>{list.name}</option>
