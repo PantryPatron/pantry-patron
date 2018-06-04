@@ -31,6 +31,7 @@ var saveUser = function(user) {
   console.log('inside save function (DB)');
 };
 
+
 var saveCategory = function(category) {
   var newCategory = new Category(category.body);
   newCategory.save()
@@ -87,3 +88,4 @@ module.exports.storeSave = Store.save;
 module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
 module.exports.find = find;
+
