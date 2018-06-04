@@ -1,7 +1,7 @@
 // Host all database functionality
 
 const mongoose = require('mongoose');
-
+mongoose.Promise = Promise;
 // establish connection
 const uri = process.env.MONGOOSE_URI || 'mongodb://localhost/pantry-patron';
 mongoose.connect(uri);
