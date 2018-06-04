@@ -24,6 +24,7 @@ app.use(session({
 }));
 
 app.use(express.static(`${__dirname}/../client/dist`));
+
 // app.get('/home', function(req, res) {
 //   database.find();
 //   res.end('Hello from the home page!');
@@ -50,30 +51,33 @@ app.use(express.static(`${__dirname}/../client/dist`));
 // });
 
 app.post('/login', (req, res) => {
-  const { username, password } = req.body.user; // might only be req.body
+  const { username, password } = req.body; // might only be req.body
 
   // If user
   if (username && password) {
-    database.find(username)
-      .then(async ({ hash }) => {
-        const isValiduser = await bcrypt.compare(password, hash);
+    console.log(database.find)
+    var db = User.find({username}).exec();
+
+    db.then(async (user) => {
+        const isValiduser = await bcrypt.compare(password, user[0].hash);
 
         return {
-          hash,
+          hash : user[0].hash,
           isValidUser: isValiduser,
         };
       })
       .then(({ hash, isValidUser }) => {
         if (!isValidUser) {
-          res.redirect('/login');
+          res.end('/login');
         }
+        req.session.username = username;
+        req.session.hash = hash;
 
-        res.session.username = username;
-        res.session.hash = hash;
-        res.redirect('/');
+        console.log(req.session)
+        res.end('/');
       });
   } else {
-    res.redirect('/login');
+    res.end('/login');
   }
 });
 
@@ -104,10 +108,10 @@ app.post('/register', (req, res) => {
         req.session.username = username;
         req.session.hash = hash;
 
-        res.redirect('/');
+        res.end('/');
       });
   } else {
-    res.redirect('/register');
+    res.end('/register');
   }
 });
 
@@ -160,6 +164,14 @@ app.get('/store/search', (req, res) => {
 
 });
 
+/* KEEP THIS HERE WITHOUT IT WE CANNOT REFRESH OUR PAGES WITHOUT ERRORS*/
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 const port = process.env.PORT || 3000;
 
