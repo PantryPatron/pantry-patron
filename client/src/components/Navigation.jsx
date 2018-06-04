@@ -7,9 +7,21 @@ const NavBar = ({onHome, onLists, onLogout}) => (
       <h1>Pantry Patron</h1>
     </div>
     <div>
-      <Link to="/">Home </Link>
-      <Link to="/lists">Lists </Link>
-      <Link to="/logout">Logout </Link>
+      <Link to="/">
+        <button type="button">
+          Home
+        </button>
+      </Link>
+      <Link to="/lists">
+        <button tye="button">
+          Lists
+        </button>
+      </Link>
+      <Link to="/logout">
+        <button type="button">
+          Logout
+        </button>
+      </Link>
       {/*<input type="button" value="Home" onClick={onHome}/>
       <input type="button" value="Lists" onClick={onLists}/>
       <input type="button" value="Logout" onClick={onLogout}/>*/}
