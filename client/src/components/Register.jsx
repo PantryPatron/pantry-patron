@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom'
 class Register extends React.Component {
   constructor(props){
     super(props);
@@ -13,7 +13,7 @@ class Register extends React.Component {
 
   checkPasswords(callback) {
     // check to see if passwords are the same
-    let match = this.state.entry === this.state.reEntry && (this.state.entry !== '' || this.state.reEntry !== '') ;
+    let match = this.state.entry === this.state.reEntry && (this.state.entry !== '' && this.state.reEntry !== '') ;
 
     if(match){
       // send username and pasword information to callback  to be processed later
@@ -39,11 +39,17 @@ class Register extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
     {/*Header*/}
         <div>
-          <button>Login</button>
+      {/*makes the button the link */}
+          <Link to="/login">
+            <button type="button">
+              Login
+            </button>
+          </Link>
           <h3>Register</h3>
         </div>
       {/*User information*/}
@@ -62,7 +68,7 @@ class Register extends React.Component {
               onChange={this.handleReEntryChange.bind(this)} name="register-password-reentry"/>
           </div>
           <div>
-            <button type="button" onClick={this.checkPasswords(this, this.props.grabNewUserCredentials)}>Register</button>
+            <button type="button" onClick={this.checkPasswords(this.props.grabUserCredentials)}>Register</button>
           </div>
         </form>
       </div>
