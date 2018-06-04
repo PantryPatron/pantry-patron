@@ -80,7 +80,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   // Remove user
   req.session.destroy();
-  res.redirect('/login');
+  res.end('/login');
 });
 
 app.post('/register', (req, res) => {
