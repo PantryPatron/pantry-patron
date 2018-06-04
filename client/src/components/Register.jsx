@@ -68,7 +68,7 @@ class Register extends React.Component {
               onChange={this.handleReEntryChange.bind(this)} name="register-password-reentry"/>
           </div>
           <div>
-            <button type="button" onClick={this.checkPasswords(this.props.grabUserCredentials)}>Register</button>
+            <button type="button" onClick={() => (this.checkPasswords(this.props.grabUserCredentials))}>Register</button>
           </div>
         </form>
       </div>

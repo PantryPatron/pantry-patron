@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(props) {
@@ -38,9 +39,18 @@ class Login extends React.Component {
             </div>
             <div>
               <input type="checkbox" id="remember-me"/>
-              <label for="remember-me">Remember Me</label>
+              <label for="remember-me">
+                Remember Me
+              </label>
             </div>
-            <button type="button" onClick={this.verifyCredentials.bind(this)}>Login</button><button onClick={() => (this.props.redirectToRegister())}>Register</button>
+            <button type="button" onClick={this.verifyCredentials.bind(this)}>
+              Login
+            </button>
+            <Link to="/register">
+              <button type="button">
+                Register
+              </button>
+            </Link>
           </form>
       </div>
     )

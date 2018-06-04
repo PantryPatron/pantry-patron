@@ -31,6 +31,7 @@ var save = function(user) {
 
 var find = function() {
  console.log('inside find function (DB)');
+
 };
 
 module.exports.save = save;

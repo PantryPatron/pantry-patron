@@ -36,13 +36,23 @@ class App extends React.Component {
       if it does not exists
         force refresh/ redirect to login
     */
+    $.ajax({
+      url: 'http://localhost:3000/login'
+    });
   } // end verify
 
-  redirectTo() {
-    /*
-    HOW DO YOU REDIRECT TO RENDER AHHHH!
-    */
-  } // end redirectTo
+  logout() {
+    $.ajax({
+      url: 'http://localhost:3000/logout',
+      type: 'GET',
+      success: (response) => {
+        console.log('User logged out' , response);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  } // end logout
 
   sendNewUserCredentials(newUserCreds) {
     /*
@@ -76,15 +86,18 @@ class App extends React.Component {
 
   render() {
     var grabCredentials = this.sendNewUserCredentials.bind(this);
+    var logout = this.logout.bind(this);
 
     const test = { name: 'test' };
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" render={(props)=>(
+            <Home logout={logout} {...props}/>
+          )} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" render={() => (<Register grabUserCredentials={grabCredentials}/>)} />
-          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/logout" component={Login} />
           <Route exact path="/lists" component={Lists} />
           {/*          <Route exact path='/test' component={}/>
 */}

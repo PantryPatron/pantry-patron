@@ -19,7 +19,6 @@ app.use(session({
 }));
 
 app.use(express.static(`${__dirname}/../client/dist`));
-
 // app.get('/home', function(req, res) {
 //   database.find();
 //   res.end('Hello from the home page!');
@@ -41,9 +40,9 @@ app.use(express.static(`${__dirname}/../client/dist`));
 //   res.end('Hello from the lists page!');
 // });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(`${__dirname}/../client/dist`, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(`${__dirname}/../client/dist`, 'index.html'));
+// });
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body.user; // might only be req.body
@@ -66,6 +65,7 @@ app.post('/login', (req, res) => {
 
         res.session.username = username;
         res.session.hash = hash;
+        res.redirect('/');
       });
   } else {
     res.redirect('/login');
@@ -74,7 +74,7 @@ app.post('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
   // Remove user
-  res.session.destroy();
+  req.session.destroy();
   res.redirect('/login');
 });
 

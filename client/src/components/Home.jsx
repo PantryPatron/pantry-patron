@@ -15,7 +15,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <NavBar/>
+        <NavBar logout={this.props.logout}/>
         <br/>
         <div>
           <div>
