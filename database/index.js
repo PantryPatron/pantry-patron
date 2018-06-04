@@ -20,21 +20,57 @@ const Items = require('./schemas/ItemSchema.js');
 const Category = require('./schemas/CategorySchema.js');
 const Store = require('./schemas/StoreSchema.js');
 
-const save = (user) => {
-  const test = new User(user);
 
-  test.save((err) => {
-    if (err) throw err;
-    console.log(test);
-  });
+
+var saveUser = function(user) {
+  var test = new User(user);
+  test.save(function(err) {
+    if(err) throw err;
+    console.log(test)
+  })
   console.log('inside save function (DB)');
 };
 
-const find = () => {
-  console.log('inside find function (DB)');
+var saveCategory = function(category) {
+  var newCategory = new Category(req.body);
+  newCategory.save()
+  .then(function(category) {
+    res.end('Category saved to database');
+  })
+  .catch(function(err) {
+    res.status(400).end('Unable to save category to database');
+  })
+}
+
+var find = function() {
+ console.log('inside find function (DB)');
 };
 
-module.exports.save = save;
+var updateList = function() {
+  var newList = new GroceryList(req.body);
+  var name = newList.name;
+  List.findOne({name: name}, function(noList, listExists) {
+    // list doesn't exist
+    if (noList) {
+      newList.save()
+      .then(function(category) {
+        res.end('List saved to database');
+      })
+      .catch(function(err) {
+        res.status(400).end('Unable to save list to database');
+      })
+    }
+  }).then(listExists => {
+    List.findOneAndUpdate({name: listExists.name}, { "$set": {"items": newList.items, "name": newList.name, "user_id": newList.user_id, "total_price": newList.total_price} }, {new: true}, function(err, doc) {
+      if (err) return res.end(500, {error: err});
+      res.end('Updated existing list');
+    })
+  }).catch(err => console.error(err));
+}
+
+module.exports.saveUser = saveUser;
+module.exports.saveCategory = saveCategory;
 module.exports.find = find;
 module.exports.storeSearch = Store.find;
 module.exports.storeSave = Store.save;
+module.exports.updateList = updateList;

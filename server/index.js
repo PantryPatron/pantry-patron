@@ -10,11 +10,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10; // Difficulty  to crack (Incrementing doubles compute time)
-const User = require('../database/schemas/UserSchema.js');
 
-
-const Category = require('../database/schemas/CategorySchema.js');
-const List = require('../database/schemas/GroceryListSchema.js');
 // WE NEED BCRYPT HERE TOO
 
 app.use(bodyParser.json());
@@ -117,37 +113,24 @@ app.post('/register', (req, res) => {
 
 // add new categories into DB if not found in DB
 app.post('/category/create', function(req, res) {
-  var newCategory = new Category(req.body);
-  newCategory.save()
+  database.saveCategory()
   .then(function(category) {
-    res.end('Category saved to database');
+    res.end('Create category in database')
   })
   .catch(function(err) {
-    res.status(400).end('Unable to save category to database');
+    res.status(400).end('Unable to create category in database');
   })
 });
 
 
-app.post('/lists/create', function(req, res) {
-  var newList = new List(req.body);
-  var name = newList.name;
-  List.findOne({name: name}, function(noList, listExists) {
-    // list doesn't exist
-    if (noList) {
-      newList.save()
-      .then(function(category) {
-        res.end('List saved to database');
-      })
-      .catch(function(err) {
-        res.status(400).end('Unable to save list to database');
-      })
-    }
-  }).then(listExists => {
-    List.findOneAndUpdate({name: listExists.name}, { "$set": {"items": newList.items, "name": newList.name, "user_id": newList.user_id, "total_price": newList.total_price} }, {new: true}, function(err, doc) {
-      if (err) return res.end(500, {error: err});
-      res.end('Updated existing list');
-    })
-  }).catch(err => console.error(err))
+app.post('/lists/update', function(req, res) {
+  database.updateList()
+  .then(function(list) {
+    res.end('Updated list in database')
+  })
+  .catch(function(err) {
+    res.status(400).end('Unable to update list in database');
+  })
 });
 
 
