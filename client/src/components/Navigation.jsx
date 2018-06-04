@@ -1,10 +1,33 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import $ from 'jquery';
+
 class NavBar extends React.Component{
   constructor(props){
     super(props);
-    console.log(this.props)
+    console.log( 'Nav', this.props)
   }
+
+  redirectTo(loc) {
+    this.props.history.push(loc);
+  }
+
+  logout() {
+    var redirect = this.redirectTo.bind(this);
+
+    $.ajax({
+      url: 'http://localhost:3000/logout',
+      type: 'GET',
+      success: (loc) => {
+       if(loc) {
+        redirect(loc);
+       }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  } // end logout
 
   render(){
     return (
@@ -24,7 +47,7 @@ class NavBar extends React.Component{
               Lists
             </button>
           </Link>
-          <button onClick={() => (this.props.logout())} type="button">
+          <button onClick={() => (this.logout())} type="button">
             Logout
           </button>
         </div>
