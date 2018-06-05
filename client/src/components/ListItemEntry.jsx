@@ -26,7 +26,7 @@ export default class ListItemEntry extends React.Component {
         <input type="text" name="item" value={this.state.item.name} disabled/>
         <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleQtyChange.bind(this)} step="any"/>
         <input type="number" name="price" value={this.state.price} onChange={this.handlePriceChange.bind(this)} step="any"/>
-        <Category categories={cats}/>
+        <Category categories={cats || this.props.categories}/>
         </td>
       </tr>
     );

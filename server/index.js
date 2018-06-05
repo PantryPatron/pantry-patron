@@ -117,7 +117,9 @@ app.post('/register', (req, res) => {
 app.post('/category/create', function(req, res) {
   database.saveCategory(req)
   .then(function(category) {
-    res.end('Create category in database')
+
+    res.end(JSON.stringify(category));
+
   })
   .catch(function(err) {
     res.status(400).end('Unable to create category in database');

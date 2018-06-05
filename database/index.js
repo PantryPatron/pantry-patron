@@ -15,11 +15,13 @@ db.once('open', () => {
 });
 // import collections here
 const User = require('./schemas/UserSchema.js');
-const GroceryList = require('./schemas/GroceryListSchema.js');
 const Items = require('./schemas/ItemSchema.js');
 const Category = require('./schemas/CategorySchema.js');
+
 const Store = require('./schemas/StoreSchema.js');
 
+// const ItemHistory = require('./schemas/ItemHistory.js');
+const GroceryList = require('./schemas/GroceryListSchema.js');
 
 
 var saveUser = function(user) {

@@ -22,11 +22,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn :false
+      isLoggedIn :false,
+      stores: []
     };
   } // end constructor
 
-  verify(credentials) {
+  componentDidMount() {
+    this.getStoresAvailable();
+  }
+
+  getStoresAvailable() {
+    $.ajax({
+      /*Come back to later */
+    });
+  }
+
+  verify(credentials, callback) {
     /*
     grab the record of the user account that belongs to username
       if it exists
@@ -41,8 +52,11 @@ class App extends React.Component {
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(credentials),
-      success: (res) => {
-
+      success: (loc) => {
+        if(loc = '/') {
+          this.setState({isLoggedIn: true})
+          callback(loc);
+        }
       },
       error: (err) => {
         console.error(err);
@@ -93,9 +107,13 @@ class App extends React.Component {
           <Route exact path="/login" render={(props) => (
             <Login verify={this.verify.bind(this)} {...props}/>
           )} />
-          <Route exact path="/register" render={(props) => (<Register grabUserCredentials={grabCredentials} {...props}/>)}/>
+          <Route exact path="/register" render={(props) => (
+            <Register grabUserCredentials={grabCredentials} {...props}/>
+          )}/>
           <Route exact path="/logout" component={Login} />
-          <Route exact path="/lists" component={Lists} />
+          <Route exact path="/lists" render={(props) => (
+            <Lists stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
+          )} />
         </Switch>
       </Router>
     );

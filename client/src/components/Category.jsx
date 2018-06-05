@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 export default class Category extends React.Component{
   constructor(props){
@@ -16,13 +17,23 @@ export default class Category extends React.Component{
     let newCategory = {
       name: prompt("Enter a new category")
     }
-    // uses a callback to create the new category then passes in another callback
-    // that sets the state.category of this item
-    /*this.props.createCategory(newCategory, function(err, success) {
-      if(err) throw err;
 
-      this.setState({category: success.name});
-    });*/
+    let set = this.setState.bind(this);
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/category/create',
+      contentType: 'application/json',
+      data: JSON.stringify(newCategory),
+      success: (data) => {
+        console.log('response to category', data)
+        // if(res.status === 201) {
+        //   set({category: res.responseText.name})
+        // }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
     console.log(newCategory);
   }
   render() {

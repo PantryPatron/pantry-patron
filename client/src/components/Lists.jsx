@@ -10,7 +10,7 @@ class Lists extends React.Component{
       userLists : this.props.lists || [{items: [{name: 'apples', category_id: 12},{name: 'corn', category_id: 13}], name: 'Walmart', total_price: 25.89}, {items: [], name: 'Kmart', total_price: 25.89}, {items: [], name: 'Target', total_price: 25.89}],
       selectedList: {name: null, items: []}
     };
-    console.log('stores', this.props.stores)
+
     this.state.userLists['x'] = {name: null, items: []};
   }
 

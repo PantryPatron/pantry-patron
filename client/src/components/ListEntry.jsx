@@ -1,5 +1,5 @@
 import React from 'react';
-
+import $ from 'jquery';
 import ListItemEntry from './ListItemEntry.jsx';
 import ItemForm from './ItemForm.jsx';
 
@@ -7,12 +7,32 @@ class ListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      store: '',
+      store: '' || this.props.stores.name,
       total_price: 0.00,
-      items: this.props.list.items
+      items: this.props.list.items,
+      stores: this.props.stores
     }
-    console.log('2', this.props.stores)
   } // end constructor
+
+  updateList(list) {
+    let options = {
+      store: this.state.store,
+      total_price: this.state.total_price,
+      items: this.state.items.concat(list),
+
+    }
+    console.log(options.items)
+  }
+
+  searchForPrice() {
+    /*
+    search for the price of the item.
+    */
+
+  }
+  getCategories() {
+    $.ajax
+  }
 
   handleStoreChange(e) {
     this.setState({store: e.target.value});
@@ -24,7 +44,7 @@ class ListEntry extends React.Component {
           <br/>
           <select className="store-selection" onChange={this.handleStoreChange.bind(this)}>
             <option key="new">New store</option>
-            {this.props.stores.map( (store) => {
+            {this.state.stores.map( (store) => {
               return <option key={store._id} >{store}</option>
             })}
           </select>
@@ -37,7 +57,9 @@ class ListEntry extends React.Component {
             })
           }
           <br/>
-          <ItemForm />
+          <ItemForm updateList={this.updateList.bind(this)}/>
+          <button type="button">Edit</button>
+          <button type="calculate">Calculate</button>
         </div>
       );
   } // end render

@@ -1,13 +1,15 @@
 import React from 'react';
+import $ from 'jquery';
 
 class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      quantity: 'quantity',
-      price: 'price'
+      quantity: 0,
+      price: 0
     }
+    console.log(this.props.store)
     // bindings
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleQuantChange = this.handleQuantChange.bind(this);
@@ -32,14 +34,19 @@ class ItemForm extends React.Component {
   }
 
   // handle submit of edit
-  handleSubmit(item) {
-    // save item to database
-    // ajax request to send data to server
-      // item name:
+  handleSubmit() {
+    let newItem = {
+      name: this.state.name,
+      quantity: this.state.quantity,
+      price: this.state.price
+    };
 
-    // if given store
-      // find store object id, save with item
-    // dont forget to add category
+    newItem = this.transformItem(newItem);
+    this.props.updateList(newItem);
+  }
+
+  transformItem() {
+
   }
 
   render() {
@@ -49,12 +56,14 @@ class ItemForm extends React.Component {
           <input type="text" placeholder="Enter an item..." name="item" value={this.state.name} onChange={this.handleNameChange}/>
           <input type="number" placeholder="Quantity" name="quantity" value={this.state.quantity} onChange={this.handleQuantChange}/>
           <input type="number" placeholder="Price" name="price" step="any" value={this.state.price} onChange={this.handlePriceChange}/>
+          <button type="button" onClick={()=> (this.handleSubmit())}>Add</button>
         </form>
         <div>
           <button type="button" className="btn btn-default btn-sm" onClick={this.handleSubmit}>
             <span className="glyphicon glyphicon-plus"></span> Add Item to Cart
           </button>
         </div>
+
       </div>
     );
   }
