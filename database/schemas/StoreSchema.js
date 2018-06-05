@@ -7,10 +7,6 @@ const StoreSchema = Schema({
     type: String,
     required: true,
   },
-  items: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Items',
-  }],
 });
 
 module.exports = mongoose.model('Store', StoreSchema);
