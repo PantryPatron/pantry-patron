@@ -41,12 +41,18 @@ class ItemForm extends React.Component {
       price: this.state.price
     };
 
+    // sends the item to the database and returns
+    // the item with the corresponding item id
+    // then sends it to be added to the list
     newItem = this.transformItem(newItem, (newItem) => {
       this.props.updateList(newItem);
     });
   }
 
   transformItem(newItem, callback) {
+    /*
+    sends the item to the database to get an objectId
+    */
     $.ajax({
       url: 'http://localhost:3000/search/item',
       type: 'POST',
