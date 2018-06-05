@@ -9,4 +9,4 @@ const StoreSchema = Schema({
   },
 });
 
-module.exports = mongoose.model('Store', StoreSchema);
+module.exports = mongoose.model('Stores', StoreSchema);
