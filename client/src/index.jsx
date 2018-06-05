@@ -49,10 +49,9 @@ class App extends React.Component {
       data: JSON.stringify(credentials),
       success: (data) => {
         data = data;
-          console.log('userrrrr',data);
           // this.setState({isLoggedIn: true});
           // //get user information
-          // this.setState({user: data.userData.username});
+          this.setState({'user': JSON.parse(data).userData});
           callback(JSON.parse(data).loc);
       },
       error: (err) => {
@@ -79,7 +78,7 @@ class App extends React.Component {
 
   render() {
     var grabCredentials = this.sendNewUserCredentials.bind(this);
-
+    console.log('USER INFO', this.state.user)
     const test = { name: 'test' };
     return (
       <Router>
@@ -95,7 +94,7 @@ class App extends React.Component {
           )}/>
           <Route exact path="/logout" component={Login} />
           <Route exact path="/lists" render={(props) => (
-            <Lists stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
+            <Lists user={this.state.user} stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
           )} />
         </Switch>
       </Router>

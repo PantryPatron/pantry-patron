@@ -30,21 +30,9 @@ var saveUser = function(user) {
 
   newUser.save(function(err) {
     if(err) throw err;
-    console.log(newUser)
   })
-  console.log('inside save function (DB)');
 };
 
-var saveCategory = function(category) {
-  var newCategory = new Category(category.body);
-  newCategory.save()
-  .then(function(category) {
-    res.end('Category saved to database');
-  })
-  .catch(function(err) {
-    res.status(400).end('Unable to save category to database');
-  })
-}
 
 var updateList = function(list) {
   var newList = new GroceryList(list.body);
@@ -77,9 +65,7 @@ var addItemToList = function(item) {
 }
 
 var searchForItem = (item, callback) => {
-  console.log('search', item)
   Items.find({name: item.name}).exec((err, itemRecords) => {
-    console.log('records', itemRecords)
     // if an item exists
     if(itemRecords.length) {
       //send the first record back
@@ -108,14 +94,28 @@ var createItem = (item, callback) => {
   });
 };
 
-var createList = () => {
+var createList = (query) => {
+  searchForUserById(query.user_id, (user) => {
 
+    var newList = new GroceryList({name: query.name});
+      console.log(newList, '<======================', user)
+      user.grocery_lists.push(newList);
+
+    newList.save((err) => {
+      if(err)  console.error(err);
+    });
+  })
 };
 
-var searchForList = (query) => {
-  // query = {_id: } || {name: , user_id: }
+var searchForUserById = (query, callback) => {
+  console.log('search for user', query)
+  // query = {name: , user_id: }
+  User.findById(query).exec((err, user) => {
+    if(err) {console.error(err)};
 
-}
+    callback(user);
+  });
+ }
 
 var searchForStore = () => {
 
@@ -132,10 +132,53 @@ var createHistoryItem = () => {
 
 }
 
+var searchForCategory = (query, callback) => {
+  // query needs to be an obj {name: categoryName}
+  //if not it will be converted so we can do a find all
+  query = query.name ? query : {};
+
+  Category.find(query).exec((err, categories) => {
+    if(!categories.length){
+        // if a name is provided
+      if(query.name) {
+        //create new category
+        createCategory(query, callback)
+      } else {
+        // else error out or maybe return error so we can display it
+        console.error('cannot create empty category')
+      }
+    } else {
+      // if they made a query with an item name
+      if(query.name) {
+        //return the first item in the array.
+        callback(categories[0]);
+      } else  {
+        // else return every category
+        callback(categories);
+      }
+    }
+  });
+
+}
+
+var createCategory = function(query, callback) {
+  // create new category document
+  var newCategory = new Category(query);
+  //save the category document
+  newCategory.save((err) => {
+    if(err) console.error(err);
+
+    callback(newCategory);
+  })
+
+}
+
 module.exports.saveUser = saveUser;
-module.exports.saveCategory = saveCategory;
+module.exports.searchForCategory = searchForCategory;
+module.exports.searchForUserById = searchForUserById;
 module.exports.storeSearch = Store.find;
 module.exports.storeSave = Store.save;
 module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
+module.exports.createList = createList;
 module.exports.searchForItem = searchForItem;

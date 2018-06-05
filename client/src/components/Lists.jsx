@@ -6,9 +6,10 @@ import NavBar from './Navigation.jsx';
 
 class Lists extends React.Component{
   constructor(props) {
+
     super(props);
     this.state = {
-      userLists : this.props.lists || [{items: [{name: 'apples', category_id: 12},{name: 'corn', category_id: 13}], name: 'Walmart', total_price: 25.89}, {items: [], name: 'Kmart', total_price: 25.89}, {items: [], name: 'Target', total_price: 25.89}],
+      userLists :  this.props.user.grocery_lists || [],
       selectedList: {name: null, items: []}
     };
 
@@ -16,10 +17,10 @@ class Lists extends React.Component{
     this.state.userLists['new'] = {name: 'new', items: []};
   }
 
-  handleNewList() {
+  handleNewList(user) {
     var newList = {
       name: prompt('What\'s this lists name?'),
-      username
+      user_id:JSON.parse( user)._id
     }
 
     console.log(newList)
@@ -46,9 +47,8 @@ class Lists extends React.Component{
 
   render() {
     var display;
-
     if(this.state.selectedList.name === 'new') {
-      this.handleNewList();
+      this.handleNewList(this.props.user);
     } else {
       display = !!this.state.selectedList.name ?
      <ListEntry stores={this.props.stores} id='list' list={this.state.selectedList} /> :
