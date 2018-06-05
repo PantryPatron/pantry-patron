@@ -27,7 +27,7 @@ class Lists extends React.Component{
 
     return (
       <div>
-      <NavBar/>
+      <NavBar {...this.props} />
       <br/>
         <select onChange={this.handleListSelect.bind(this)}>
           <option value='x' key='x'> Select </option>

@@ -10,6 +10,7 @@ class Home extends React.Component {
       selected: props.selected || {name: 'slkjsi', total_price: 12, items: []},
       onEdit: props.onEdit,
     };
+    console.log(this.props)
   }
 
   render() {
