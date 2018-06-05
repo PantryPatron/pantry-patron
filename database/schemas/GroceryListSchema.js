@@ -6,12 +6,18 @@ var GroceryListSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Items'
   }],
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   user_id: {
     type: Schema.Types.ObjectId,
     ref: 'Users'
   },
-  total_price: Number
+  total_price: {
+    type: Number,
+    default: 0.00
+  }
 });
 
 module.exports = mongoose.model('GroceryLists', GroceryListSchema);
