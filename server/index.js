@@ -53,7 +53,7 @@ app.post('/login', (req, res) => {
         res.end(JSON.stringify({loc: '\/', userData: user}));
       })
       .catch((err) => {
-        console.error(err)
+        if(err) console.error(err, 'user does not exist.');
       });
   } else {
     res.end('/login');
@@ -88,7 +88,8 @@ app.post('/register', (req, res) => {
         req.session.hash = hash;
 
         res.end('/');
-      });
+      })
+      .catch();
   } else {
     res.end('/register');
   }

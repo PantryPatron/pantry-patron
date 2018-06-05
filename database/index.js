@@ -103,6 +103,7 @@ var createItem = (item, callback) => {
   // the callback will be invoked after the item is saved to the db
   newItem.save((err) => {
     if(err) console.error(err);
+
     callback(newItem);
   });
 };

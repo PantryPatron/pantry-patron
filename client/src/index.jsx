@@ -24,9 +24,10 @@ class App extends React.Component {
     this.state = {
       isLoggedIn :false,
       stores: [],
-      user: {},
-
+      user: {}
     };
+          console.log(`the user is logged in: ${this.state.isLoggedIn}, under user info ${this.state.user.username}`)
+
   } // end constructor
 
   componentDidMount() {
@@ -52,7 +53,7 @@ class App extends React.Component {
           // this.setState({isLoggedIn: true});
           // //get user information
           // this.setState({user: data.userData.username});
-          callback(data.loc);
+          callback(JSON.parse(data).loc);
       },
       error: (err) => {
         console.error(err);
