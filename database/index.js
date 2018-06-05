@@ -30,7 +30,7 @@ var saveUser = function(user) {
 
   newUser.save(function(err) {
     if(err) throw err;
-    console.log(test)
+    console.log(newUser)
   })
   console.log('inside save function (DB)');
 };

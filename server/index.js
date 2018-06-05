@@ -11,6 +11,8 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10; // Difficulty  to crack (Incrementing doubles compute time)
 
+const User = require('../database/schemas/UserSchema.js');
+
 // WE NEED BCRYPT HERE TOO
 
 app.use(bodyParser.json());
