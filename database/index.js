@@ -129,9 +129,7 @@ var createList = () => {
 
 var searchForList = (query) => {
   // query = {_id: } || {name: , user_id: }
-  GroceryList.find(query).exec((err, lists) {
 
-  });
 }
 
 var searchForStore = () => {
