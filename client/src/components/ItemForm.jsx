@@ -32,13 +32,14 @@ class ItemForm extends React.Component {
   }
 
   // handle submit of edit
-  handleSubmit() {
-    this.props.onFormSubmit({
-      // id: this.props.item.id,
-      // name: this.state.name,
-      // quantity: this.state.quantity,
-      // price: this.state.price
-    });
+  handleSubmit(item) {
+    // save item to database
+    // ajax request to send data to server
+      // item name:
+
+    // if given store
+      // find store object id, save with item
+    // dont forget to add category
   }
 
   render() {
@@ -50,8 +51,8 @@ class ItemForm extends React.Component {
           <input type="number" placeholder="Price" name="price" step="any" value={this.state.price} onChange={this.handlePriceChange}/>
         </form>
         <div>
-          <button type="button" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-plus"></span> Add Item to Cart
+          <button type="button" className="btn btn-default btn-sm" onClick={this.handleSubmit}>
+            <span className="glyphicon glyphicon-plus"></span> Add Item to Cart
           </button>
         </div>
       </div>
