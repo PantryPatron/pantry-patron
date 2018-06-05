@@ -20,12 +20,12 @@ class Lists extends React.Component{
   handleNewList(user) {
     var newList = {
       name: prompt('What\'s this lists name?'),
-      user_id:JSON.parse( user)._id
+      user_id: JSON.parse( user)['_id']
     }
 
     console.log(newList)
     $.ajax({
-      url: 'http://localhost:3000/lists/create',
+      url: '/lists/create',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(newList),

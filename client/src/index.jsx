@@ -43,7 +43,7 @@ class App extends React.Component {
 
   verify(credentials, callback) {
     $.ajax({
-      url: 'http://localhost:3000/login',
+      url: '/login',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(credentials),
@@ -62,7 +62,7 @@ class App extends React.Component {
 
   sendNewUserCredentials(newUserCreds, callback) {
     $.ajax({
-      url: 'http://localhost:3000/register',
+      url: '/register',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(newUserCreds),

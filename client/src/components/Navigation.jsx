@@ -16,7 +16,7 @@ class NavBar extends React.Component{
     var redirect = this.redirectTo.bind(this);
 
     $.ajax({
-      url: 'http://localhost:3000/logout',
+      url: '/logout',
       type: 'GET',
       success: (loc) => {
        if(loc) {
