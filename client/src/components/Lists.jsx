@@ -9,7 +9,7 @@ class Lists extends React.Component{
 
     super(props);
     this.state = {
-      userLists :  this.props.user.grocery_lists || [],
+      userLists :  this.props.lists || [],
       selectedList: {name: null, items: []}
     };
 
@@ -18,20 +18,19 @@ class Lists extends React.Component{
   }
 
   handleNewList(user) {
+    console.log('This is the user I got', user)
     var newList = {
       name: prompt('What\'s this lists name?'),
-      user_id: JSON.parse( user)['_id']
+      user_id: user._id
     }
 
-    console.log(newList)
     $.ajax({
       url: '/lists/create',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(newList),
       success: (data) => {
-        data = JSON.parse(data)
-        console.log("here is your list :", data)
+        this.setState({selectedList: JSON.parse(data)});
       },
       err: (err) => {
         console.error(err);
@@ -47,6 +46,7 @@ class Lists extends React.Component{
 
   render() {
     var display;
+      console.log('The user being used is ', this.props.lists)
     if(this.state.selectedList.name === 'new') {
       this.handleNewList(this.props.user);
     } else {
