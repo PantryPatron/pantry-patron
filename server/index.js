@@ -138,6 +138,7 @@ app.post('/lists/create', function(req, res) {
       if (err) return res.end(500, {error: err});
       res.end('Updated existing list');
     })
+  })
 });
 
 app.get('/store/search', (req, res) => {
@@ -146,8 +147,8 @@ app.get('/store/search', (req, res) => {
 
 
 /* KEEP THIS HERE WITHOUT IT WE CANNOT REFRESH OUR PAGES WITHOUT ERRORS*/
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), function(err) {
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), (err) => {
     if (err) {
       res.status(500).send(err)
     }

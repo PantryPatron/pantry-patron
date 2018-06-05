@@ -76,22 +76,6 @@ var addItemToList = function(item) {
   })
 }
 
-var find = function() {
- console.log('inside find function (DB)');
-};
-
-module.exports.saveUser = saveUser;
-module.exports.saveCategory = saveCategory;
-
-module.exports.find = find;
-module.exports.storeSearch = Store.find;
-module.exports.storeSave = Store.save;
-
-
-module.exports.updateList = updateList;
-module.exports.addItemToList = addItemToList;
-module.exports.find = find;
-
 var searchForItem = (item, callback) => {
   console.log('search', item)
   Items.find({name: item.name}).exec((err, itemRecords) => {
@@ -148,4 +132,9 @@ var createHistoryItem = () => {
 }
 
 module.exports.saveUser = saveUser;
+module.exports.saveCategory = saveCategory;
+module.exports.storeSearch = Store.find;
+module.exports.storeSave = Store.save;
+module.exports.updateList = updateList;
+module.exports.addItemToList = addItemToList;
 module.exports.searchForItem = searchForItem;
