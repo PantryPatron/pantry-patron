@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET || '0979zx7v6vvq0398ubvq7w6dc8c7z5rvg7i1',
   cookie: {},
+  resave: true,
+  saveUninitialized: true,
 }));
 
 app.use(express.static(`${__dirname}/../client/dist`));
@@ -146,6 +148,29 @@ app.post('/lists/create', function(req, res) {
       res.end('Updated existing list');
     })
   }).catch(err => console.error(err))
+});
+
+
+app.post('/store/create', (req, res) => {
+  const { store, items } = req.body;
+
+  database.storeSearch({ store })
+    .then((stores) => {
+      if (stores) {
+        // If store already exists
+        return res.send(undefined);
+      }
+
+      // If no store create a new one
+      database.save({ store, items })
+        .then(() => {
+          res.send('Sucess!');
+        });
+    })
+});
+
+app.get('/store/search', (req, res) => {
+
 });
 
 
