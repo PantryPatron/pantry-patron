@@ -33,7 +33,6 @@ var saveUser = function(user) {
   console.log('inside save function (DB)');
 };
 
-
 var saveCategory = function(category) {
   var newCategory = new Category(category.body);
   newCategory.save()
@@ -91,3 +90,24 @@ module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
 module.exports.find = find;
 
+var searchForItemAndCreate = (item) => {
+console.log('before ===> ',item);
+
+  Items.find({name: item.name}).exec(function(err, itemList){
+    console.log(itemList, 'found this')
+    if(!itemList.length) {
+      var newItem = new Items({name: item.name});
+
+      newItem.save((err) => {
+        if(err) console.error(err);
+        console.log(newItem);
+      })
+    } else {
+      console.log('found this here ', itemList[0])
+    }
+  });
+};
+
+module.exports.save = save;
+// module.exports.find = User.findOne;
+module.exports.searchForItemAndCreate = searchForItemAndCreate;

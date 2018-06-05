@@ -31,7 +31,7 @@ class ListEntry extends React.Component {
 
   }
   getCategories() {
-    $.ajax
+
   }
 
   handleStoreChange(e) {

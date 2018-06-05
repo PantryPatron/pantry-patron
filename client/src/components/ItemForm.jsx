@@ -41,12 +41,25 @@ class ItemForm extends React.Component {
       price: this.state.price
     };
 
-    newItem = this.transformItem(newItem);
-    this.props.updateList(newItem);
+    newItem = this.transformItem(newItem, (newItem) => {
+      this.props.updateList(newItem);
+    });
   }
 
-  transformItem() {
-
+  transformItem(newItem, callback) {
+    $.ajax({
+      url: 'http://localhost:3000/search/item',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(newItem),
+      success: (data) => {
+        console.log('transformed', data);
+        callback(JSON.parse(data));
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 
   render() {

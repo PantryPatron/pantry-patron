@@ -118,6 +118,7 @@ app.post('/category/create', function(req, res) {
   database.saveCategory(req)
   .then(function(category) {
 
+    res.status(201);
     res.end(JSON.stringify(category));
 
   })
@@ -126,6 +127,10 @@ app.post('/category/create', function(req, res) {
   })
 });
 
+app.post('/search/item', (req, res) => {
+  console.log('post', req.body)
+  database.searchForItemAndCreate(req.body);
+});
 
 app.post('/lists/update', function(req, res) {
   database.updateList(req)
