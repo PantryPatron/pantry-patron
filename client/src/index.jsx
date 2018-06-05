@@ -24,7 +24,8 @@ class App extends React.Component {
     this.state = {
       isLoggedIn :false,
       stores: [],
-      user: {}
+      user: {},
+      list: [],
     };
           console.log(`the user is logged in: ${this.state.isLoggedIn}, under user info ${this.state.user.username}`)
 
@@ -49,8 +50,10 @@ class App extends React.Component {
       data: JSON.stringify(credentials),
       success: (data) => {
         data = data;
-          // this.setState({isLoggedIn: true});
+        console.log(JSON.parse(data))
+          this.setState({isLoggedIn: true});
           // //get user information
+          this.setState({lists: JSON.parse(data).lists})
           this.setState({'user': JSON.parse(data).userData});
           callback(JSON.parse(data).loc);
       },
@@ -83,9 +86,13 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={(props)=>(
-            <Home {...props}/>
-          )} />
+          <Route exact path="/" render={(props)=>{
+            if(this.state.isLoggedIn){
+              return <Home {...props}/>
+            } else {
+              return <Login verify={this.verify.bind(this)} {...props}/>
+            }
+          }} />
           <Route exact path="/login" render={(props) => (
             <Login verify={this.verify.bind(this)} {...props}/>
           )} />
@@ -94,7 +101,7 @@ class App extends React.Component {
           )}/>
           <Route exact path="/logout" component={Login} />
           <Route exact path="/lists" render={(props) => (
-            <Lists user={this.state.user} stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
+            <Lists user={this.state.user} lists={this.state.lists} stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
           )} />
         </Switch>
       </Router>
