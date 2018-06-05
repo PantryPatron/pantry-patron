@@ -22,11 +22,13 @@ const Store = require('./schemas/StoreSchema.js');
 
 // const ItemHistory = require('./schemas/ItemHistory.js');
 const GroceryList = require('./schemas/GroceryListSchema.js');
+// const Store = require('./schemas/Store.js');
 
 
 var saveUser = function(user) {
-  var test = new User(user);
-  test.save(function(err) {
+  var newUser = new User(user);
+
+  newUser.save(function(err) {
     if(err) throw err;
     console.log(test)
   })
@@ -90,24 +92,62 @@ module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
 module.exports.find = find;
 
-var searchForItemAndCreate = (item, callback) => {
-console.log('before ===> ',item);
-
-  Items.find({name: item.name}).exec(function(err, itemList){
-    console.log(itemList, 'found this')
-    if(!itemList.length) {
-      var newItem = new Items({name: item.name});
-
-      newItem.save((err) => {
-        if(err) console.error(err);
-        callback(newItem);
-      })
+var searchForItem = (item, callback) => {
+  console.log('search', item)
+  Items.find({name: item.name}).exec((err, itemRecords) => {
+    console.log('records', itemRecords)
+    // if an item exists
+    if(itemRecords.length) {
+      //send the first record back
+      callback(itemRecords[0]);
     } else {
-      callback(itemList[0]);
+      // if there is not item
+      let newItem = {
+        name: item.name
+      }
+      // create a new item record
+      createItem(newItem, callback)
     }
   });
 };
 
-module.exports.save = save;
-// module.exports.find = User.findOne;
-module.exports.searchForItemAndCreate = searchForItemAndCreate;
+
+// create a new item record then use a callback
+// to get you where you need
+var createItem = (item, callback) => {
+  var newItem = new Items(item);
+  // the callback will be invoked after the item is saved to the db
+  newItem.save((err) => {
+    if(err) console.error(err);
+    callback(newItem);
+  });
+};
+
+var createList = () => {
+
+};
+
+var searchForList = (query) => {
+  // query = {_id: } || {name: , user_id: }
+  GroceryList.find(query).exec((err, lists) {
+
+  });
+}
+
+var searchForStore = () => {
+
+}
+
+var createStore = () => {
+
+}
+
+var searchForItemInHistory = () => {
+
+}
+var createHistoryItem = () => {
+
+}
+
+module.exports.saveUser = saveUser;
+module.exports.searchForItem = searchForItem;
