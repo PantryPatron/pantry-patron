@@ -23,11 +23,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoggedIn :false,
-      stores: []
+      stores: [],
+      user: {},
+
     };
   } // end constructor
 
   componentDidMount() {
+
     this.getStoresAvailable();
   }
 
@@ -38,25 +41,18 @@ class App extends React.Component {
   }
 
   verify(credentials, callback) {
-    /*
-    grab the record of the user account that belongs to username
-      if it exists
-        use BCRYPT to hash the password using the salt provided
-        if the passwords match
-          redirect to home
-      if it does not exists
-        force refresh/ redirect to login
-    */
     $.ajax({
       url: 'http://localhost:3000/login',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(credentials),
-      success: (loc) => {
-        if(loc = '/') {
-          this.setState({isLoggedIn: true})
-          callback(loc);
-        }
+      success: (data) => {
+        data = data;
+          console.log('userrrrr',data);
+          // this.setState({isLoggedIn: true});
+          // //get user information
+          // this.setState({user: data.userData.username});
+          callback(data.loc);
       },
       error: (err) => {
         console.error(err);
@@ -65,20 +61,6 @@ class App extends React.Component {
   } // end verify
 
   sendNewUserCredentials(newUserCreds, callback) {
-    /*
-      maybe create an endpoint in the server that saves new user info to db
-      make a post ajax call to save new user information to database
-
-      {
-        url: 'http://localhost:3000/new_user',    <----- we might be able to make this dynamic eg) /new/user
-        type: 'POST',
-        data: {
-          newUserCreds
-        },
-        sucess: console.log.bind(console, 'Woo! Welcome to Pantry Patron! Hope we can save you some money'),
-        error: console.error.bind(console, error);
-      }
-    */
     $.ajax({
       url: 'http://localhost:3000/register',
       type: 'POST',
