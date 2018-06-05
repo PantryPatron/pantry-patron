@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 import ListEntry from './ListEntry.jsx';
 import NavBar from './Navigation.jsx';
@@ -12,6 +13,29 @@ class Lists extends React.Component{
     };
 
     this.state.userLists['x'] = {name: null, items: []};
+    this.state.userLists['new'] = {name: 'new', items: []};
+  }
+
+  handleNewList() {
+    var newList = {
+      name: prompt('What\'s this lists name?'),
+      username
+    }
+
+    console.log(newList)
+    $.ajax({
+      url: 'http://localhost:3000/lists/create',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(newList),
+      success: (data) => {
+        data = JSON.parse(data)
+        console.log("here is your list :", data)
+      },
+      err: (err) => {
+        console.error(err);
+      }
+    });
   }
 
   handleListSelect(e) {
@@ -21,9 +45,15 @@ class Lists extends React.Component{
   }
 
   render() {
-    var display = !!this.state.selectedList.name ?
+    var display;
+
+    if(this.state.selectedList.name === 'new') {
+      this.handleNewList();
+    } else {
+      display = !!this.state.selectedList.name ?
      <ListEntry stores={this.props.stores} id='list' list={this.state.selectedList} /> :
      <div id='warning'>Select a list from the<br/>from drop down menu</div>;
+    }
 
     return (
       <div>
