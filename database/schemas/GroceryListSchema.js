@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-var GroceryListSchema = Schema({
-  items: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Items'
-  }],
+const { Schema } = mongoose;
+
+const GroceryListSchema = Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
-  user_id: {
+  items: [{
     type: Schema.Types.ObjectId,
-    ref: 'Users'
-  },
+    ref: 'ItemHistories',
+  }],
   total_price: {
     type: Number,
-    default: 0.00
-  }
+    default: 0.00,
+  },
+  store_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Stores',
+  },
 });
 
 module.exports = mongoose.model('GroceryLists', GroceryListSchema);
