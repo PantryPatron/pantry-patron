@@ -141,7 +141,28 @@ app.post('/lists/create', function(req, res) {
 });
 
 app.get('/store/search', (req, res) => {
+  const { name } = req.body;
 
+  const promiseSearch = name ? database.storeSearch({ name }) : database.storeSearch({});
+
+  promiseSearch.then(stores => res.send(stores));
+});
+
+app.post('/store/create', (req, res) => {
+  const { name } = req.body;
+
+  if (!name) {
+    res.status(404);
+    res.send('Require name');
+  }
+
+  database.storeSave({ name })
+    .then(store => res.send(store))
+    .catch(err => {
+      console.error(err);
+      res.status(500);
+      res.send('Apologies for this error. From our expreience this occurs when the store name is a duplicate. We advise checking the store name.');
+    })
 });
 
 
