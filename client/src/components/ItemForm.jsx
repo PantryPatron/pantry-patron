@@ -53,7 +53,7 @@ class ItemForm extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify(newItem),
       success: (data) => {
-        console.log('transformed', data);
+        console.log('transformed', JSON.parse(data));
         callback(JSON.parse(data));
       },
       error: (err) => {

@@ -90,7 +90,7 @@ module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
 module.exports.find = find;
 
-var searchForItemAndCreate = (item) => {
+var searchForItemAndCreate = (item, callback) => {
 console.log('before ===> ',item);
 
   Items.find({name: item.name}).exec(function(err, itemList){
@@ -100,10 +100,10 @@ console.log('before ===> ',item);
 
       newItem.save((err) => {
         if(err) console.error(err);
-        console.log(newItem);
+        callback(newItem);
       })
     } else {
-      console.log('found this here ', itemList[0])
+      callback(itemList[0]);
     }
   });
 };

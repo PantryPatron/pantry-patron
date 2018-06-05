@@ -21,7 +21,10 @@ class ListEntry extends React.Component {
       items: this.state.items.concat(list),
 
     }
-    console.log(options.items)
+    this.setState(options);
+    /*
+    save updated list to database.
+    */
   }
 
   searchForPrice() {

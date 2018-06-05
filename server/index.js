@@ -129,7 +129,10 @@ app.post('/category/create', function(req, res) {
 
 app.post('/search/item', (req, res) => {
   console.log('post', req.body)
-  database.searchForItemAndCreate(req.body);
+  database.searchForItemAndCreate(req.body, (item) => {
+    console.log('callback', item)
+    res.end(JSON.stringify(item));
+  });
 });
 
 app.post('/lists/update', function(req, res) {
