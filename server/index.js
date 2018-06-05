@@ -25,31 +25,6 @@ app.use(session({
 
 app.use(express.static(`${__dirname}/../client/dist`));
 
-// app.get('/home', function(req, res) {
-//   database.find();
-//   res.end('Hello from the home page!');
-// });
-
-// app.get('/login', function(req, res) {
-//   res.end('Hello world from the PantryPatron login page!')
-// });
-
-// app.get('/register', function (req, res) {
-//   res.end('Hello from the register page!');
-// });
-
-// app.get('/logout', function(req, res) {
-//   res.end('Hello from the logout page!');
-// });
-
-// app.get('/list', function(req, res) {
-//   res.end('Hello from the lists page!');
-// });
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(`${__dirname}/../client/dist`, 'index.html'));
-// });
-
 app.post('/login', (req, res) => {
   const { username, password } = req.body; // might only be req.body
 
@@ -59,20 +34,24 @@ app.post('/login', (req, res) => {
 
     db.then(async (user) => {
         const isValiduser = await bcrypt.compare(password, user[0].hash);
-
+        console.log('isValid', isValiduser)
         return {
+          user: user[0],
           hash : user[0].hash,
           isValidUser: isValiduser,
         };
       })
-      .then(({ hash, isValidUser }) => {
+      .then(({ user, hash, isValidUser }) => {
         if (!isValidUser) {
           res.end('/login');
         }
         req.session.username = username;
         req.session.hash = hash;
-
-        res.end('\/');
+        console.log("here" ,user)
+        res.end(JSON.stringify({loc: '\/', userData: user}));
+      })
+      .catch((err) => {
+        console.error(err)
       });
   } else {
     res.end('/login');
@@ -94,7 +73,7 @@ app.post('/register', (req, res) => {
   if (username && password) {
     bcrypt.hash(password, saltRounds)
       .then(async hash => (
-        database.save({
+        database.saveUser({
           username,
           hash,
           grocery_list: [],
@@ -127,50 +106,44 @@ app.post('/category/create', function(req, res) {
   })
 });
 
+// searches the database for an item, if it doesn't exists a new item
+// will be created
 app.post('/search/item', (req, res) => {
   console.log('post', req.body)
-  database.searchForItemAndCreate(req.body, (item) => {
+  database.searchForItem(req.body, (item) => {
     console.log('callback', item)
     res.end(JSON.stringify(item));
   });
 });
 
-app.post('/lists/update', function(req, res) {
-  database.updateList(req)
-  .then(function(list) {
-    res.end('Updated list in database')
-  })
-  .catch(function(err) {
-    res.status(400).end('Unable to update list in database');
-  })
-});
 
-app.post('/item/add', function(req, res) {
-  // add item to database list
-});
-
-
-app.post('/store/create', (req, res) => {
-  const { store, items } = req.body;
-
-  database.storeSearch({ store })
-    .then((stores) => {
-      if (stores) {
-        // If store already exists
-        return res.send(undefined);
-      }
-
-      // If no store create a new one
-      database.save({ store, items })
-        .then(() => {
-          res.send('Sucess!');
-        });
+app.post('/lists/create', function(req, res) {
+  console.log("BEFORE",req.session.username)
+  var newList = new List({name: req.body.name, username: req.session.username});
+  console.log('AFTER', newList)
+  var name = newList.name;
+  List.findOne({name: name}, function(err, listExists) {
+    // list doesn't exist
+    if (!listExists.length) {
+      newList.save()
+      .then(function(category) {
+        res.end('List saved to database');
+      })
+      .catch(function(err) {
+        res.status(400).end('Unable to save list to database');
+      })
+    }
+  }).then(listExists => {
+    List.findOneAndUpdate({name: listExists.name}, { "$set": {"items": newList.items, "name": newList.name, "user_id": newList.user_id, "total_price": newList.total_price} }, {new: true}, function(err, doc) {
+      if (err) return res.end(500, {error: err});
+      res.end('Updated existing list');
     })
 });
 
 app.get('/store/search', (req, res) => {
 
 });
+
 
 /* KEEP THIS HERE WITHOUT IT WE CANNOT REFRESH OUR PAGES WITHOUT ERRORS*/
 app.get('*', function(req, res) {
