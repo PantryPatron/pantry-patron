@@ -6,14 +6,6 @@ const ItemSchema = Schema({
   name: {
     type: String,
     required: true,
-  },
-  category_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'Categories'
-  },
-  store: {
-    type: Schema.Types.ObjectId,
-    ref: 'Store'
   }
 });
 
