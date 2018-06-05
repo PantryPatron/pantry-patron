@@ -94,16 +94,20 @@ var createItem = (item, callback) => {
   });
 };
 
-var createList = (query) => {
+var createList = (query, callback) => {
   searchForUserById(query.user_id, (user) => {
 
     var newList = new GroceryList({name: query.name});
-      console.log(newList, '<======================', user)
+      // console.log(newList, '<======================', user)
       user.grocery_lists.push(newList);
+      console.log(user.grocery_lists)
 
     newList.save((err) => {
       if(err)  console.error(err);
+      user.save();
+      callback(newList);
     });
+
   })
 };
 
@@ -112,10 +116,19 @@ var searchForUserById = (query, callback) => {
   // query = {name: , user_id: }
   User.findById(query).exec((err, user) => {
     if(err) {console.error(err)};
-
+    console.log('user-found', user.username)
     callback(user);
   });
  }
+
+var searchForListsAndPopulate = (listIds, callback) => {
+  console.log('list id\'s', listIds);
+
+  GroceryList.find({_id:{$in: listIds}}).exec((err, data) => {
+    callback(data)
+  })
+
+}
 
 var searchForStore = () => {
 
@@ -182,3 +195,4 @@ module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
 module.exports.createList = createList;
 module.exports.searchForItem = searchForItem;
+module.exports.searchForListsAndPopulate = searchForListsAndPopulate;
