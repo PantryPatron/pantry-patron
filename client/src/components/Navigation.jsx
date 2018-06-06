@@ -30,11 +30,8 @@ class NavBar extends React.Component{
 
   render(){
     return (
-      <div>
-        <div>
-          <h1>Pantry Patron</h1>
-        </div>
-        <div>
+      <div className="navbar navbar-default">
+        <div className="container-fluid">
           <Link to="/">
             <button type="button">
               Home
