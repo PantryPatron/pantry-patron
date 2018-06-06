@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
   // Link,
   Switch,
 } from 'react-router-dom';
@@ -76,44 +75,21 @@ class App extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify(credentials),
       success: (data) => {
-        data = data;
         // console.log(JSON.parse(data), 'in verify credentials')
-          this.setState({isLoggedIn: true});
-          // //get user information
-          this.setState({lists: JSON.parse(data).lists || []})
-          this.setState({'user': JSON.parse(data).userData || {}});
-          callback(JSON.parse(data).loc);
+        this.setState({ isLoggedIn: true });
+        // //get user information
+        this.setState({ lists: JSON.parse(data).lists || [] });
+        this.setState({ user: JSON.parse(data).userData || {} });
+        callback(JSON.parse(data).loc);
       },
       error: (err) => {
         console.error(err);
         callback('/login');
-
-      }
+      },
     });
   } // end verify
 
-  sendNewUserCredentials(newUserCreds, callback) {
-    $.ajax({
-      url: '/register',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(newUserCreds),
-      success: (loc) => {
-        // console.log('New user information saved to db')
-        callback(loc);
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-  }
-
-  renderIfLoggedIn(RouteIfLoggedIn) {
-    return this.state.isLoggedIn ? RouteIfLoggedIn : <Redirect to="/login" />;
-  }
-
   render() {
-    var grabCredentials = this.sendNewUserCredentials.bind(this);
     // console.log('USER INFO', this.state)
     return (
       <Router>
@@ -121,37 +97,30 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={props =>
-            this.renderIfLoggedIn(<Home {...props} />)
-          }
+            render={props => <Home {...props} />}
           />
           <Route
             exact
             path="/login"
-            render={props =>
-              <Login verify={this.verify} {...props} />
-          }
+            render={props => <Login verify={this.verify} {...props} />}
           />
           <Route
             exact
             path="/register"
-            render={props =>
-              <Register grabUserCredentials={sendNewUserCredentials} {...props} />
+            render={props => <Register grabUserCredentials={sendNewUserCredentials} {...props} />
           }
           />
           <Route exact path="/logout" component={Login} />
           <Route
             exact
             path="/lists"
-            render={props =>
-            this.renderIfLoggedIn(<Lists
+            render={props => (<Lists
               user={this.state.user}
               lists={this.state.lists}
               update={this.update}
               stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']}
               {...props}
-            />)
-          }
+            />)}
           />
         </Switch>
       </Router>
