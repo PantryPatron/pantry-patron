@@ -174,7 +174,6 @@ app.post('/store/create', util.checkLoggedIn, (req, res) => {
     });
 });
 
-
 // Initialization
 const port = process.env.PORT || 3000;
 
