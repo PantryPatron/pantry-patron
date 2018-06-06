@@ -145,6 +145,10 @@ var createStore = () => {
 
 }
 
+var searchForItemInHistoryAndPopulate = () => {
+
+}
+
 var searchForItemInHistory = (item, callback) => {
   /*CHECKS THE ITEMHISTORY TO SEE IF THE ITEM EXISTS
     IF NOT IT SHOULD CREATE A NEW ITEMHISTORY DOCUMENT*/
@@ -228,3 +232,4 @@ module.exports.createList = createList;
 module.exports.searchForItem = searchForItem;
 module.exports.searchForListsAndPopulate = searchForListsAndPopulate;
 module.exports.searchForItemInHistory = searchForItemInHistory;
+module.exports.searchForItemInHistoryAndPopulate = searchForItemInHistoryAndPopulate;

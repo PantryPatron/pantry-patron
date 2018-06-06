@@ -63,6 +63,13 @@ app.post('/login', (req, res) => {
   }
 });
 
+app.post('/updateHistory', (req, res) => {
+  console.log(req.body)
+  database.searchForItemInHistoryAndPopulate({ newItem: req.body}, (historyItem) => {
+    console.log('check me out ', historyItem)
+  })
+});
+
 app.get('/logout', (req, res) => {
   // Remove user
   req.session.destroy();

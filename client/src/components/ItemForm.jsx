@@ -9,6 +9,11 @@ class ItemForm extends React.Component {
       quantity: 0,
       price: 0
     }
+
+    //component-global timer and delay
+    this.delay = 2000;
+    this.timer;
+
     console.log(this.props.store)
     // bindings
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -21,6 +26,9 @@ class ItemForm extends React.Component {
   handleNameChange(e) {
     // console.log(e.target.value, 'was entered')
     this.setState({name: e.target.value});
+
+    // clearTimeout(this.timer);
+    // setTimeout(() => console.log('done')), this.delay);
   }
 
   handleQuantChange(e) {
@@ -35,8 +43,14 @@ class ItemForm extends React.Component {
 
   // handle submit of edit
   handleSubmit() {
+    let itemName = this.state.name ? this.state.name : prompt('There is no such things as a null object in life. Give it a name');
+
+    while(itemName === '') {
+      itemName = prompt('Stop trying to be sneaky!');
+    }
+
     let newItem = {
-      name: this.state.name,
+      name: itemName
     };
 
     // sends the item to the database and returns
