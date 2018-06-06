@@ -20,9 +20,9 @@ const Category = require('./schemas/CategorySchema.js');
 
 const Store = require('./schemas/StoreSchema.js');
 
-// const ItemHistory = require('./schemas/ItemHistory.js');
+const ItemHistory = require('./schemas/ItemHistorySchema.js');
 const GroceryList = require('./schemas/GroceryListSchema.js');
-// const Store = require('./schemas/Store.js');
+// const Store = require('./schemas/StoreSchema.js');
 
 
 var saveUser = function(user) {
@@ -126,9 +126,13 @@ var searchForListsAndPopulate = (listIds, callback) => {
   console.log('list id\'s', listIds);
 
   GroceryList.find({_id:{$in: listIds}})
-  .populate('GroceryLists')
-  .exec((err, data) => {
-    console.log('please work', data)
+  .populate({
+    path: 'items',
+    populate: {
+      path: 'item_id'
+    }
+  }).exec((err, data) => {
+    console.log('searchForListsAndPopulate found', data)
     callback(data)
   })
 
@@ -142,11 +146,35 @@ var createStore = () => {
 
 }
 
-var searchForItemInHistory = () => {
+var searchForItemInHistory = (item, callback) => {
+  /*CHECKS THE ITEMHISTORY TO SEE IF THE ITEM EXISTS
+    IF NOT IT SHOULD CREATE A NEW ITEMHISTORY DOCUMENT*/
+  ItemHistory.find({item_id: item.newItem._id}).exec((err, histItem) => {
+    if(!histItem.length) {
+      createHistoryItem(item, (newHistItem) => {
 
+        GroceryList.find({_id: item.list}).exec((err, list) => {
+          console.log(newHistItem,'newHistoryItem')
+          list[0].items.push(newHistItem)
+          list[0].save( (err) => {
+            if(err) { console.error(err) };
+          console.log('this is the list', list[0].items);
+            callback(list[0])
+          });
+        })
+
+      });
+    } else {
+      callback(histItem[0]);
+    }
+  })
 }
-var createHistoryItem = () => {
-
+var createHistoryItem = (item, callback) => {
+  let newHistItem = new ItemHistory({item_id: item.newItem._id});
+    newHistItem.save((err) => {
+      if(err) { console.error(err) };
+      callback(newHistItem);
+    })
 }
 
 var searchForCategory = (query, callback) => {
@@ -200,3 +228,4 @@ module.exports.addItemToList = addItemToList;
 module.exports.createList = createList;
 module.exports.searchForItem = searchForItem;
 module.exports.searchForListsAndPopulate = searchForListsAndPopulate;
+module.exports.searchForItemInHistory = searchForItemInHistory;
