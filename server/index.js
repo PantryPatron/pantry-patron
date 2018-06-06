@@ -36,7 +36,6 @@ app.post('/login', (req, res) => {
 
     db.then(async (user) => {
         const isValiduser = await bcrypt.compare(password, user[0].hash);
-        console.log('isValid', isValiduser)
         return {
           user: user[0],
           hash : user[0].hash,
@@ -101,7 +100,6 @@ app.post('/register', (req, res) => {
 
 // add new categories into DB if not found in DB
 app.post('/category/create', function(req, res) {
-  console.log('server sided ', req.body)
   database.searchForCategory(req.body, (category) => {
     res.end(JSON.stringify(category));
   })
@@ -110,11 +108,21 @@ app.post('/category/create', function(req, res) {
 // searches the database for an item, if it doesn't exists a new item
 // will be created
 app.post('/search/item', (req, res) => {
-  console.log('post', req.body)
   database.searchForItem(req.body, (item) => {
-    console.log('callback', item)
     res.end(JSON.stringify(item));
   });
+});
+
+app.post('/addItem', (req, res) => {
+  console.log('add item endpoint', req.body)
+  database.searchForItemInHistory(req.body, (updatedList) =>{
+    console.log(updatedList)
+    res.end(JSON.stringify(updatedList))
+  })
+  /*database.searchForItem(req.body, (item) => {
+    console.log('callback', item)
+    res.end(JSON.stringify(item));
+  });*/
 });
 
 
