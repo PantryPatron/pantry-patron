@@ -99,7 +99,6 @@ var createList = (query, callback) => {
   searchForUserById(query.user_id, (user) => {
 
     var newList = new GroceryList({name: query.name});
-      console.log(newList, '<======================', user)
       user.grocery_lists.push(newList);
       console.log(user.grocery_lists)
 
