@@ -30,19 +30,15 @@ class NavBar extends React.Component{
 
   render(){
     return (
-      <div className="navbar navbar-default">
-        <div className="container-fluid">
+      <div className="navbar navbar-default navbar-static-top">
+        <div className="container">
           <Link to="/">
-            <button type="button">
-              Home
-            </button>
+            <button type="button" className="btn btn-default navbar-btn">Home</button>
           </Link>
           <Link to="/lists">
-            <button tye="button">
-              Lists
-            </button>
+            <button type="button" className="btn btn-default navbar-btn">Lists</button>
           </Link>
-          <button onClick={() => (this.logout())} type="button">
+          <button type="button" className="btn btn-default navbar-btn" onClick={() => (this.logout())} type="button">
             Logout
           </button>
         </div>
