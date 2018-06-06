@@ -95,10 +95,11 @@ var createItem = (item, callback) => {
 };
 
 var createList = (query, callback) => {
+  console.log(query)
   searchForUserById(query.user_id, (user) => {
 
     var newList = new GroceryList({name: query.name});
-      // console.log(newList, '<======================', user)
+      console.log(newList, '<======================', user)
       user.grocery_lists.push(newList);
       console.log(user.grocery_lists)
 
@@ -124,7 +125,10 @@ var searchForUserById = (query, callback) => {
 var searchForListsAndPopulate = (listIds, callback) => {
   console.log('list id\'s', listIds);
 
-  GroceryList.find({_id:{$in: listIds}}).exec((err, data) => {
+  GroceryList.find({_id:{$in: listIds}})
+  .populate('GroceryLists')
+  .exec((err, data) => {
+    console.log('please work', data)
     callback(data)
   })
 

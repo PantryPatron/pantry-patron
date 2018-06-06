@@ -5,7 +5,6 @@ import $ from 'jquery';
 class NavBar extends React.Component{
   constructor(props){
     super(props);
-    console.log( 'Nav', this.props)
   }
 
   redirectTo(loc) {

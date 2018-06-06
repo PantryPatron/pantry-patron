@@ -25,7 +25,7 @@ class App extends React.Component {
       isLoggedIn :false,
       stores: [],
       user: {},
-      list: [],
+      lists: [],
     };
           console.log(`the user is logged in: ${this.state.isLoggedIn}, under user info ${this.state.user.username}`)
 
@@ -33,13 +33,6 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    this.getStoresAvailable();
-  }
-
-  getStoresAvailable() {
-    $.ajax({
-      /*Come back to later */
-    });
   }
 
   verify(credentials, callback) {
@@ -81,7 +74,7 @@ class App extends React.Component {
 
   render() {
     var grabCredentials = this.sendNewUserCredentials.bind(this);
-    console.log('USER INFO', this.state.user)
+    console.log('USER INFO', this.state)
     const test = { name: 'test' };
     return (
       <Router>

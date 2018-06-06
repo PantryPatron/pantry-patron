@@ -50,8 +50,11 @@ app.post('/login', (req, res) => {
         req.session.username = username;
         req.session.hash = hash;
         console.log("here" ,user)
-        let results = {'loc': '\/', 'userData': JSON.stringify(user)};
+        database.searchForListsAndPopulate(user.grocery_lists, (lists) => {
+        let results = {'loc': '\/', 'lists': lists, 'userData': user};
         res.end(JSON.stringify(results));
+
+        })
       })
       .catch((err) => {
         if(err) console.error(err, 'user does not exist.');
@@ -117,27 +120,9 @@ app.post('/search/item', (req, res) => {
 
 app.post('/lists/create', function(req, res) {
   console.log("BEFORE",req.body)
-  database.createList(req.body);
-  // var newList = new List({name: req.body.name, username: req.session.username});
-  // console.log('AFTER', newList)
-  // var name = newList.name;
-  // List.findOne({name: name}, function(err, listExists) {
-  //   // list doesn't exist
-  //   if (!listExists.length) {
-  //     newList.save()
-  //     .then(function(category) {
-  //       res.end('List saved to database');
-  //     })
-  //     .catch(function(err) {
-  //       res.status(400).end('Unable to save list to database');
-  //     })
-  //   }
-  // }).then(listExists => {
-  //   List.findOneAndUpdate({name: listExists.name}, { "$set": {"items": newList.items, "name": newList.name, "user_id": newList.user_id, "total_price": newList.total_price} }, {new: true}, function(err, doc) {
-  //     if (err) return res.end(500, {error: err});
-  //     res.end('Updated existing list');
-  //   })
-  // })
+  database.createList(req.body, (list) => {
+    res.end(JSON.stringify(list))
+  });
 });
 
 app.get('/store/search', (req, res) => {

@@ -54,7 +54,7 @@ class ItemForm extends React.Component {
     sends the item to the database to get an objectId
     */
     $.ajax({
-      url: 'http://localhost:3000/search/item',
+      url: 'search/item',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(newItem),
