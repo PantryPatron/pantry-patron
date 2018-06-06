@@ -37,8 +37,6 @@ class ItemForm extends React.Component {
   handleSubmit() {
     let newItem = {
       name: this.state.name,
-      quantity: this.state.quantity,
-      price: this.state.price
     };
 
     // sends the item to the database and returns
