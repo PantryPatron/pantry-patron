@@ -28,9 +28,8 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
           <form>
-            <img src="https://i1.wp.com/www.upbring.org/wp-content/uploads/2017/03/fake-logo-2.png?ssl=1"/>
             <div>
               <input type="text" placeholder="username" name="login-username" value={this.state.username} onChange={this.handleUsernameChange.bind(this)}/>
             </div>

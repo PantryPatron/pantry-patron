@@ -32,7 +32,6 @@ class NavBar extends React.Component{
     return (
       <div>
         <div>
-          <img src="https://i1.wp.com/www.upbring.org/wp-content/uploads/2017/03/fake-logo-2.png?ssl=1" alt="Pantry Patron Logo" />
           <h1>Pantry Patron</h1>
         </div>
         <div>
