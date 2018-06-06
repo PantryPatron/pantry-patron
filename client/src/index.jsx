@@ -30,18 +30,18 @@ class App extends React.Component {
   } // end constructor
 
   componentDidMount() {
-    this.getStores();
+    // this.getStores();
   }
 
-  getStores() {
-    $.ajax({
-      url: '/store/search',
-      type: 'GET',
-      success: () => {
+  // getStores() {
+  //   $.ajax({
+  //     url: '/store/search',
+  //     type: 'GET',
+  //     success: () => {
 
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
   update(data) {
     this.setState(data);

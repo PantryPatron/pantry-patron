@@ -39,9 +39,12 @@ class Lists extends React.Component{
         console.log(JSON.parse(data), 'here is the data')
 
           this.setState({
-            selectedList: JSON.parse(data),
-            userLists: this.state.userLists.concat([JSON.parse(data)])
+            userLists: this.state.userLists.concat([JSON.parse(data)]),
+            selectedList: JSON.parse(data)
           });
+
+          this.state.userLists['x'] = {name: null, items: []};
+          this.state.userLists['new'] = {name: 'new', items: []};
 
           console.log('this is the state currently: ', this.state)
           // set the drop down to the list
@@ -61,7 +64,7 @@ class Lists extends React.Component{
 
   render() {
     var display;
-    console.log(this.state.selectedList)
+    console.log('======> ', this.state.selectedList)
     if(this.state.selectedList.name === 'new') {
       this.handleNewList(this.props.user);
     } else {

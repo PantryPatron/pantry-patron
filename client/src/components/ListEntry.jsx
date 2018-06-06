@@ -26,7 +26,8 @@ class ListEntry extends React.Component {
         console.log('add item returned ', data)
         this.setState({items: data[0].items});
       },
-      error: () => {
+      error: (err) => {
+        console.error(err);
       }
     })
   }
