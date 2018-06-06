@@ -7,6 +7,7 @@ class ListEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      _id: this.props.list._id,
       store: '' || this.props.stores.name,
       total_price: 0.00,
       items: this.props.list.items,
@@ -14,23 +15,17 @@ class ListEntry extends React.Component {
     }
   } // end constructor
 
-  updateList(newItem) {
-    // let options = {
-    //   store: this.state.store,
-    //   total_price: this.state.total_price,
-    //   items: this.state.items.concat(newItem),
-
-    // }
-    // this.setState(options);
-
-    // first send the new item to the itemHistory collection
+  updateList(newItem, callback) {
+    var set = this.setState.bind(this);
     $.ajax({
       url: '/addItem',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({newItem: newItem, list: this.props.list._id}),
       success: (data) => {
+        data = JSON.parse(data);
         console.log('add item returned ', data)
+        set({items: data[0].items})
       },
       error: () => {
       }
@@ -51,6 +46,7 @@ class ListEntry extends React.Component {
     this.setState({store: e.target.value});
   }
   render() {
+    console.log(this.state,'from listEntry')
       return (
         <div>
           <h3>{this.props.list.name}</h3>
