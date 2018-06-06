@@ -28,10 +28,30 @@ const GroceryList = require('./schemas/GroceryListSchema.js');
 var saveUser = function(user) {
   var newUser = new User(user);
 
-  newUser.save(function(err) {
+  newUser.save(function(err, docs) {
     if(err) throw err;
+
+
+    console.log('User saved: ', docs)
+
   })
 };
+
+
+
+var saveCategory = function(category) {
+  var newCategory = new Category(category.body);
+  newCategory.save(function(err, docs) {
+    if (err) throw err;
+    console.log('Document saved: ', docs)
+  })
+  .then(function(category) {
+    res.end('Category saved to database');
+  })
+  .catch(function(err) {
+    res.status(400).end('Unable to save category to database');
+  })
+}
 
 
 var updateList = function(list) {
