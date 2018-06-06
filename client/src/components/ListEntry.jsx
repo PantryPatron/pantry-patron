@@ -14,17 +14,27 @@ class ListEntry extends React.Component {
     }
   } // end constructor
 
-  updateList(list) {
-    let options = {
-      store: this.state.store,
-      total_price: this.state.total_price,
-      items: this.state.items.concat(list),
+  updateList(newItem) {
+    // let options = {
+    //   store: this.state.store,
+    //   total_price: this.state.total_price,
+    //   items: this.state.items.concat(newItem),
 
-    }
-    this.setState(options);
-    /*
-    save updated list to database.
-    */
+    // }
+    // this.setState(options);
+
+    // first send the new item to the itemHistory collection
+    $.ajax({
+      url: '/addItem',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({newItem: newItem, list: this.props.list._id}),
+      success: (data) => {
+        console.log('add item returned ', data)
+      },
+      error: () => {
+      }
+    })
   }
 
   searchForPrice() {
