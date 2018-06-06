@@ -39,7 +39,7 @@ class Login extends React.Component {
             </div>
             <div>
               <input type="checkbox" id="remember-me"/>
-              <label for="remember-me">
+              <label htmlFor="remember-me">
                 Remember Me
               </label>
             </div>

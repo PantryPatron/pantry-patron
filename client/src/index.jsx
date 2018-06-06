@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
+  Redirect,
+  // Link,
   Switch,
 } from 'react-router-dom';
 
@@ -14,20 +15,41 @@ import $ from 'jquery';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
-import Logout from './components/Logout.jsx';
+// import Logout from './components/Logout.jsx';
 import Lists from './components/Lists.jsx';
 // WE NEED TO DOWNLOAD AND IMPORT BCRYPT
+
+function sendNewUserCredentials(newUserCreds, callback) {
+  $.ajax({
+    url: '/register',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(newUserCreds),
+    success: (loc) => {
+      console.log('New user information saved to db');
+      callback(loc);
+    },
+    error: (err) => {
+      console.error(err);
+    },
+  });
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn :false,
+      isLoggedIn: false,
       stores: [],
       user: {},
       lists: [],
     };
-  } // end constructor
+    console.log(`the user is logged in: ${this.state.isLoggedIn}, under user info ${this.state.user.username}`);
+
+    this.verify = this.verify.bind(this);
+    // this.sendNewUserCredentials = this.sendNewUserCredentials.bind(this);
+    this.update = this.update.bind(this);
+  }
 
   componentDidMount() {
     // this.getStores();
@@ -86,29 +108,51 @@ class App extends React.Component {
     });
   }
 
+  renderIfLoggedIn(RouteIfLoggedIn) {
+    return this.state.isLoggedIn ? RouteIfLoggedIn : <Redirect to="/login" />;
+  }
+
   render() {
     var grabCredentials = this.sendNewUserCredentials.bind(this);
     // console.log('USER INFO', this.state)
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={(props)=>{
-            if(this.state.isLoggedIn){
-              return <Home {...props}/>
-            } else {
-              return <Login verify={this.verify.bind(this)} {...props}/>
-            }
-          }} />
-          <Route exact path="/login" render={(props) => (
-            <Login verify={this.verify.bind(this)} {...props}/>
-          )} />
-          <Route exact path="/register" render={(props) => (
-            <Register grabUserCredentials={grabCredentials} {...props}/>
-          )}/>
+          <Route
+            exact
+            path="/"
+            render={props =>
+            this.renderIfLoggedIn(<Home {...props} />)
+          }
+          />
+          <Route
+            exact
+            path="/login"
+            render={props =>
+              <Login verify={this.verify} {...props} />
+          }
+          />
+          <Route
+            exact
+            path="/register"
+            render={props =>
+              <Register grabUserCredentials={sendNewUserCredentials} {...props} />
+          }
+          />
           <Route exact path="/logout" component={Login} />
-          <Route exact path="/lists" render={(props) => (
-            <Lists user={this.state.user} lists={this.state.lists} update={this.update.bind(this)} stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
-          )} />
+          <Route
+            exact
+            path="/lists"
+            render={props =>
+            this.renderIfLoggedIn(<Lists
+              user={this.state.user}
+              lists={this.state.lists}
+              update={this.update}
+              stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']}
+              {...props}
+            />)
+          }
+          />
         </Switch>
       </Router>
     );
@@ -116,7 +160,6 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
 
 /*
 /'
