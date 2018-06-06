@@ -116,13 +116,10 @@ app.post('/search/item', (req, res) => {
 app.post('/addItem', (req, res) => {
   console.log('add item endpoint', req.body)
   database.searchForItemInHistory(req.body, (updatedList) =>{
-    console.log(updatedList)
-    res.end(JSON.stringify(updatedList))
+    database.searchForListsAndPopulate([updatedList._id], (populatedList) => {
+      res.end(JSON.stringify(populatedList))
+    });
   })
-  /*database.searchForItem(req.body, (item) => {
-    console.log('callback', item)
-    res.end(JSON.stringify(item));
-  });*/
 });
 
 
