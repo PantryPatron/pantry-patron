@@ -19,8 +19,14 @@ class Lists extends React.Component{
 
   handleNewList(user) {
     console.log('This is the user I got', user)
+    // let listName = prompt('What\'s this lists name?');
+
+    // while(listName === '') {
+    //   listName = prompt('One cannot create a list with no name');
+    // }
+
     var newList = {
-      name: prompt('What\'s this lists name?'),
+      name:  prompt('What\'s this lists name?'),
       user_id: user._id
     }
 
@@ -30,7 +36,17 @@ class Lists extends React.Component{
       contentType: 'application/json',
       data: JSON.stringify(newList),
       success: (data) => {
-        this.setState({selectedList: JSON.parse(data)});
+        console.log(JSON.parse(data), 'here is the data')
+
+          this.setState({
+            selectedList: JSON.parse(data),
+            userLists: this.state.userLists.concat([JSON.parse(data)])
+          });
+
+          console.log('this is the state currently: ', this.state)
+          // set the drop down to the list
+          $('#list-select').val(this.state.userLists.length -1);
+          this.props.update({lists: this.state.userLists});
       },
       err: (err) => {
         console.error(err);
@@ -39,19 +55,17 @@ class Lists extends React.Component{
   }
 
   handleListSelect(e) {
-    this.setState({selectedList: this.state.userLists['x']})
     this.setState({selectedList: this.state.userLists[e.target.value]});
     // console.log(this.state.selectedList)
   }
 
   render() {
     var display;
-      console.log('The user being used is ', this.props.lists)
     if(this.state.selectedList.name === 'new') {
       this.handleNewList(this.props.user);
     } else {
       display = !!this.state.selectedList.name ?
-     <ListEntry stores={this.props.stores} id='list' list={this.state.selectedList} /> :
+     <ListEntry stores={this.props.stores} className='list' list={this.state.selectedList} /> :
      <div id='warning'>Select a list from the<br/>from drop down menu</div>;
     }
 
@@ -59,8 +73,8 @@ class Lists extends React.Component{
       <div>
       <NavBar {...this.props} />
       <br/>
-        <select onChange={this.handleListSelect.bind(this)}>
-          <option value='x' key='x'> Select </option>
+        <select id="list-select" onChange={this.handleListSelect.bind(this)}>
+          <option value='x' key='x' selected> Select </option>
           <option value='new' key='new'>New list</option>
           {
             this.state.userLists.map((list, index) => {

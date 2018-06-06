@@ -16,7 +16,6 @@ class ListEntry extends React.Component {
   } // end constructor
 
   updateList(newItem, callback) {
-    var set = this.setState.bind(this);
     $.ajax({
       url: '/addItem',
       type: 'POST',
@@ -25,7 +24,7 @@ class ListEntry extends React.Component {
       success: (data) => {
         data = JSON.parse(data);
         console.log('add item returned ', data)
-        set({items: data[0].items})
+        this.setState({items: data[0].items});
       },
       error: () => {
       }

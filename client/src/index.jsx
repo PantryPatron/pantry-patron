@@ -27,12 +27,14 @@ class App extends React.Component {
       user: {},
       lists: [],
     };
-          console.log(`the user is logged in: ${this.state.isLoggedIn}, under user info ${this.state.user.username}`)
-
   } // end constructor
 
   componentDidMount() {
 
+  }
+
+  update(data) {
+    this.setState(data);
   }
 
   verify(credentials, callback) {
@@ -43,7 +45,7 @@ class App extends React.Component {
       data: JSON.stringify(credentials),
       success: (data) => {
         data = data;
-        console.log(JSON.parse(data))
+        // console.log(JSON.parse(data), 'in verify credentials')
           this.setState({isLoggedIn: true});
           // //get user information
           this.setState({lists: JSON.parse(data).lists})
@@ -63,7 +65,7 @@ class App extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify(newUserCreds),
       success: (loc) => {
-        console.log('New user information saved to db')
+        // console.log('New user information saved to db')
         callback(loc);
       },
       error: (err) => {
@@ -74,8 +76,7 @@ class App extends React.Component {
 
   render() {
     var grabCredentials = this.sendNewUserCredentials.bind(this);
-    console.log('USER INFO', this.state)
-    const test = { name: 'test' };
+    // console.log('USER INFO', this.state)
     return (
       <Router>
         <Switch>
@@ -94,7 +95,7 @@ class App extends React.Component {
           )}/>
           <Route exact path="/logout" component={Login} />
           <Route exact path="/lists" render={(props) => (
-            <Lists user={this.state.user} lists={this.state.lists} stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
+            <Lists user={this.state.user} lists={this.state.lists} update={this.update.bind(this)} stores={['walmart', 'kmart', 'target', 'giant', 'wegmans']} {...props}/>
           )} />
         </Switch>
       </Router>
