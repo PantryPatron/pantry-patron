@@ -93,8 +93,10 @@ class ItemForm extends React.Component {
         </form>
        </div>
 
+       <div>
+         <form>
           <button type="button" className="btn btn-default btn-sm" onClick={() => ( this.handleSubmit() )}>
-            <span className="glyphicon glyphicon-plus"></span> Add Item to Cart
+            <span className="glyphicon glyphicon-plus"> Add Item to Cart </span>
           </button>
         </form>
       </div>
