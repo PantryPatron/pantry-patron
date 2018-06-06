@@ -30,7 +30,17 @@ class App extends React.Component {
   } // end constructor
 
   componentDidMount() {
+    this.getStores();
+  }
 
+  getStores() {
+    $.ajax({
+      url: '/store/search',
+      type: 'GET',
+      success: () => {
+
+      }
+    });
   }
 
   update(data) {
@@ -48,12 +58,14 @@ class App extends React.Component {
         // console.log(JSON.parse(data), 'in verify credentials')
           this.setState({isLoggedIn: true});
           // //get user information
-          this.setState({lists: JSON.parse(data).lists})
-          this.setState({'user': JSON.parse(data).userData});
+          this.setState({lists: JSON.parse(data).lists || []})
+          this.setState({'user': JSON.parse(data).userData || {}});
           callback(JSON.parse(data).loc);
       },
       error: (err) => {
         console.error(err);
+        callback('/login');
+
       }
     });
   } // end verify

@@ -56,7 +56,7 @@ app.post('/login', (req, res) => {
         })
       })
       .catch((err) => {
-        if(err) console.error(err, 'user does not exist.');
+        if(err) console.error('user does not exist.');
       });
   } else {
     res.end('/login');

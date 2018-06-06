@@ -19,14 +19,14 @@ class Lists extends React.Component{
 
   handleNewList(user) {
     console.log('This is the user I got', user)
-    // let listName = prompt('What\'s this lists name?');
+    let listName = prompt('What\'s this lists name?');
 
-    // while(listName === '') {
-    //   listName = prompt('One cannot create a list with no name');
-    // }
+    while(listName === '') {
+      listName = prompt('One cannot create a list with no name');
+    }
 
     var newList = {
-      name:  prompt('What\'s this lists name?'),
+      name: listName,
       user_id: user._id
     }
 
@@ -61,6 +61,7 @@ class Lists extends React.Component{
 
   render() {
     var display;
+    console.log(this.state.selectedList)
     if(this.state.selectedList.name === 'new') {
       this.handleNewList(this.props.user);
     } else {
