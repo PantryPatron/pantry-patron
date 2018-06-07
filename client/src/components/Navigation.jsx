@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import $ from 'jquery';
 
-
 const NavBar = () => (
   <div className="navbar navbar-default navbar-static-top">
     <div className="container">
@@ -16,7 +15,7 @@ const NavBar = () => (
         <button type="button" className="btn btn-default navbar-btn">Logout</button>
       </Link>
     </div>
-    </div>
+  </div>
 );
 
 export default NavBar;

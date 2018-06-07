@@ -44,31 +44,34 @@ class Register extends React.Component {
   render() {
     console.log(this.props)
     return (
-      <div>
-    {/*Header*/}
-        <div>
-      {/*makes the button the link */}
+      <div className="wrapper">
+        <form className="form-signin">
           <Link to="/login">
-            <button type="button">
-              Login
+            <button
+              className="btn btn-lg btn-primary btn-sm btn-block"
+              type="submit"
+              type="button">
+              Back to Login
             </button>
           </Link>
-          <h3>Register</h3>
-        </div>
-      {/*User information*/}
-        <form>
+          <h3 className="form-signin-heading">Register</h3>
           <div>
-            <input type="text" placeholder="username" name="register-username" value={this.state.username} onChange={this.handleUsername.bind(this)}/>
+            <input type="text" className="form-control" placeholder="username" name="register-username" value={this.state.username} onChange={this.handleUsername.bind(this)}/>
           </div>
           <div>
-            <input type="password" placeholder="password" value={this.state.entry} name="register-password" onChange={this.handleEntryChange.bind(this)}/>
+            <input type="password" className="form-control" placeholder="password" name="register-password" value={this.state.password} onChange={this.handleEntryChange.bind(this)}/>
           </div>
           <div>
-            <input type="password" placeholder="re-enter password"  value={this.state.reEntry}
+            <input type="password" className="form-control" placeholder="re-enter password"  value={this.state.reEntry}
               onChange={this.handleReEntryChange.bind(this)} name="register-password-reentry"/>
           </div>
-          <div>
-            <button type="button" onClick={() => (this.checkPasswords(this.props.grabUserCredentials))}>Register</button>
+          <div className="text-align">
+            <button
+              type="button"
+              className="btn btn-lg btn-primary btn-block"
+              type="submit"
+              onClick={() => (this.checkPasswords(this.props.grabUserCredentials))}>Register
+            </button>
           </div>
         </form>
       </div>
