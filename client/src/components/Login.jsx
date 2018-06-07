@@ -29,29 +29,32 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
-          <form>
-            <div>
-              <input type="text" placeholder="username" name="login-username" value={this.state.username} onChange={this.handleUsernameChange.bind(this)}/>
-            </div>
-            <div>
-              <input type="password" placeholder="password" name="login-password" value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
-            </div>
-            <div>
-              <input type="checkbox" id="remember-me"/>
-              <label htmlFor="remember-me">
-                Remember Me
-              </label>
-            </div>
-            <button type="button" onClick={this.verifyCredentials}>
+      <div className="wrapper">
+        <form className="form-signin">
+          <h3 className="form-signin-heading">Please login</h3>
+          <div>
+            <input type="text" className="form-control" placeholder="username" name="login-username" value={this.state.username} onChange={this.handleUsernameChange.bind(this)}/>
+          </div>
+          <div>
+            <input type="password" className="form-control" placeholder="password" name="login-password" value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
+          </div>
+          <div className="text-center">
+            <label className="checkbox">
+              <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe" />
+              Remember me
+            </label>
+          </div>
+          <div className="text-align">
+            <button type="button" className="btn btn-lg btn-primary btn-block" className="btn btn-primary" type="submit" onClick={this.verifyCredentials}>
               Login
             </button>
             <Link to="/register">
-              <button type="button">
+              <button type="button" className="btn btn-lg btn-primary btn-block" className="btn btn-secondary" type="submit">
                 Register
               </button>
             </Link>
-          </form>
+          </div>
+        </form>
       </div>
     )
   }
