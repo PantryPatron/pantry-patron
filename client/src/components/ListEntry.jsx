@@ -53,18 +53,24 @@ class ListEntry extends React.Component {
           <br/>
           <select className="store-selection" onChange={this.handleStoreChange.bind(this)}>
             <option key="new">New store</option>
-            {this.state.stores.map( (store) => {
-              return <option key={store._id} >{store}</option>
-            })}
+            {
+              this.state.stores.map((store, index) => {
+                return <option key={index}>{store}</option>
+              })
+            }
           </select>
           <br/>
           <br/>
-          {
-            // console.log('these are the items', this.state.items)
-            this.state.items.map((item) => {
-              return <ListItemEntry key={item._id} item={item}/>
-            })
-          }
+          <table>
+            <tbody>
+              {
+                // console.log('these are the items', this.state.items)
+                this.state.items.map((item) => {
+                  return <ListItemEntry key={item._id} item={item}/>
+                })
+              }
+            </tbody>
+          </table>
           <br/>
           <ItemForm updateList={this.updateList.bind(this)}/>
           <button type="button">Edit</button>

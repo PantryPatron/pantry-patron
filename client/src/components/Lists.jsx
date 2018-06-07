@@ -77,8 +77,8 @@ class Lists extends React.Component{
       <div className="text-center">
       <NavBar {...this.props} />
       <br/>
-        <select id="list-select" onChange={this.handleListSelect.bind(this)}>
-          <option value='x' key='x' selected> Select </option>
+        <select id="list-select" defaultValue="x" onChange={this.handleListSelect.bind(this)}>
+          <option value='x' key='x'> Select </option>
           <option value='new' key='new'>New list</option>
           {
             this.state.userLists.map((list, index) => {
