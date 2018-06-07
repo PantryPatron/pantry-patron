@@ -58,9 +58,6 @@ class Register extends React.Component {
       {/*User information*/}
         <form>
           <div>
-            <img src="https://i1.wp.com/www.upbring.org/wp-content/uploads/2017/03/fake-logo-2.png?ssl=1"/>
-          </div>
-          <div>
             <input type="text" placeholder="username" name="register-username" value={this.state.username} onChange={this.handleUsername.bind(this)}/>
           </div>
           <div>
