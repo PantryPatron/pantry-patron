@@ -15,6 +15,8 @@ class Lists extends React.Component{
 
     this.state.userLists['x'] = {name: null, items: []};
     this.state.userLists['new'] = {name: 'new', items: []};
+
+    this.handleListSelect = this.handleListSelect.bind(this);
   }
 
   handleNewList(user) {
@@ -59,11 +61,10 @@ class Lists extends React.Component{
 
   handleListSelect(e) {
     this.setState({selectedList: this.state.userLists[e.target.value]});
-    // console.log(this.state.selectedList)
   }
 
   render() {
-    var display;
+    let display;
     console.log('======> ', this.state.selectedList)
     if(this.state.selectedList.name === 'new') {
       this.handleNewList(this.props.user);
@@ -77,7 +78,7 @@ class Lists extends React.Component{
       <div className="text-center">
       <NavBar {...this.props} />
       <br/>
-        <select id="list-select" defaultValue="x" onChange={this.handleListSelect.bind(this)}>
+        <select id="list-select" defaultValue="x" onChange={this.handleListSelect}>
           <option value='x' key='x'> Select </option>
           <option value='new' key='new'>New list</option>
           {
