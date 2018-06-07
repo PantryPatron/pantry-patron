@@ -74,7 +74,7 @@ class Lists extends React.Component{
     }
 
     return (
-      <div>
+      <div className="text-center">
       <NavBar {...this.props} />
       <br/>
         <select id="list-select" onChange={this.handleListSelect.bind(this)}>

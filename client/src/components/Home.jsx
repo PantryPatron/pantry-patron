@@ -14,7 +14,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="text-center">
     {/*{...this.props passes down match and history}*/}
         <NavBar {...this.props}/>
         <br/>
