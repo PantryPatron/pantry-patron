@@ -238,14 +238,15 @@ var createCategory = function(query, callback) {
 
     callback(newCategory);
   })
-
 }
+
+const storeSave = async (store) => (await (new Store(store)).save());
 
 module.exports.saveUser = saveUser;
 module.exports.searchForCategory = searchForCategory;
 module.exports.searchForUserById = searchForUserById;
-module.exports.storeSearch = Store.find;
-module.exports.storeSave = Store.save;
+module.exports.storeSearch = Store.find.bind(Store);
+module.exports.storeSave = storeSave;
 module.exports.updateList = updateList;
 module.exports.addItemToList = addItemToList;
 module.exports.createList = createList;

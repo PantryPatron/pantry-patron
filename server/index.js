@@ -151,7 +151,7 @@ app.post('/lists/create', util.checkLoggedIn, (req, res) => {
 });
 
 app.get('/store/search', util.checkLoggedIn, (req, res) => {
-  const { name } = req.body;
+  const { name } = req.query;
 
   const promiseSearch = name ? database.storeSearch({ name }) : database.storeSearch({});
 
@@ -163,16 +163,17 @@ app.post('/store/create', util.checkLoggedIn, (req, res) => {
 
   if (!name) {
     res.status(404);
-    res.send('Require name');
+    res.send('Requires name');
+    return;
   }
 
   database.storeSave({ name })
     .then(store => res.send(store))
     .catch((err) => {
-      console.error(err);
       res.status(500);
+      console.error(`Could not create store ${name} in Stores database (Duplicate?)`, err);
       res.send('Apologies for this error. From our expreience this occurs when the store name is a duplicate. We advise checking the store name.');
-    });
+    })
 });
 
 // Initialization
