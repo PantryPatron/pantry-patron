@@ -67,7 +67,8 @@ class ItemForm extends React.Component {
     */
     $.ajax({
       url: 'search/item',
-         contentType: 'application/json',
+      type: 'POST',
+      contentType: 'application/json',
       data: JSON.stringify(newItem),
       success: (data) => {
 
