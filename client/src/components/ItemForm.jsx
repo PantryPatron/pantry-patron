@@ -67,8 +67,7 @@ class ItemForm extends React.Component {
     */
     $.ajax({
       url: 'search/item',
-      type: 'POST',
-      contentType: 'application/json',
+         contentType: 'application/json',
       data: JSON.stringify(newItem),
       success: (data) => {
 
@@ -83,16 +82,18 @@ class ItemForm extends React.Component {
 
   render() {
     return(
-      <div>
-        <form>
-          <input type="text" placeholder="Enter an item..." name="item" value={this.state.name} onChange={this.handleNameChange}/>
-          <input type="number" placeholder="Quantity" name="quantity" value={this.state.quantity} onChange={this.handleQuantChange}/>
-          <input type="number" placeholder="Price" name="price" step="any" value={this.state.price} onChange={this.handlePriceChange}/>
+      <div className="form-group">
+        <form className="navbar-form navbar-left" role="submit">
+          <input type="text" className="form-control" placeholder="Enter an item..." name="item" value={this.state.name} onChange={this.handleNameChange}/>
+          <input type="number" className="form-control" placeholder="Quantity" name="quantity" value={this.state.quantity} onChange={this.handleQuantChange}/>
+          <input type="number" className="form-control" placeholder="Price" name="price" step="any" value={this.state.price} onChange={this.handlePriceChange}/>
 
-          <button type="button" className="glyphicon glyphicon-plus" onClick={()=> (this.handleSubmit())}></button>
+          <a href="#">
+            <span className="glyphicon glyphicon-plus" type="submit" onClick={()=> (this.handleSubmit())}></span>
+          </a>
+
         </form>
        </div>
-
     );
   }
 }
