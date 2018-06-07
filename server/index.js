@@ -25,7 +25,7 @@ app.use(session({
 }));
 
 // Handle static endpoints
-const allPublicEndpoints = ['/login', '/logout', '/register'];
+const allPublicEndpoints = ['/login', '/register'];
 const allPrivateEndpoints = ['/', '/lists'];
 
 function serveStatic(endpoint, authorizeCallback = (req, res, next) => next()) {
@@ -70,7 +70,7 @@ app.post('/login', (req, res) => {
         if (err) console.error('user does not exist.');
       });
   } else {
-    res.end('/login');
+    res.redirect('/login');
   }
 });
 
@@ -83,8 +83,9 @@ app.post('/updateHistory', (req, res) => {
 
 app.get('/logout', (req, res) => {
   // Remove user
+  console.log('Logout', req.session);
   req.session.destroy();
-  res.end('/login');
+  res.redirect('/login');
 });
 
 app.post('/register', (req, res) => {
@@ -108,11 +109,11 @@ app.post('/register', (req, res) => {
         req.session.username = username;
         req.session.hash = hash;
 
-        res.end('/');
+        res.redirect('/');
       })
       .catch();
   } else {
-    res.end('/register');
+    res.redirect('/register');
   }
 });
 
