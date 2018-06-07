@@ -19,7 +19,7 @@ class Register extends React.Component {
     if(match){
       // send username and pasword information to callback  to be processed later
       callback({username: this.state.username, password: this.state.entry}, (loc)  => {
-        this.props.history.push(loc);
+        this.props.history.push('/');
       });
       // console.log(this.state.username, this.state.entry, 'was saved.')
     } else {
