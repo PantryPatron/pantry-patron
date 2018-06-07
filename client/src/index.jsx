@@ -110,7 +110,7 @@ class App extends React.Component {
             render={props => <Register grabUserCredentials={sendNewUserCredentials} {...props} />
           }
           />
-          <Route exact path="/logout" component={Login} />
+          <Route exact path="/logout" render={props => <Login verify={this.verify} {...props}/>} />
           <Route
             exact
             path="/lists"

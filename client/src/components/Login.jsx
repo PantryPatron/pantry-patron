@@ -8,6 +8,7 @@ class Login extends React.Component {
       username: '',
       password: ''
     }
+    this.verifyCredentials = this.verifyCredentials.bind(this);
   }
 
   verifyCredentials(e) {
@@ -42,7 +43,7 @@ class Login extends React.Component {
                 Remember Me
               </label>
             </div>
-            <button type="button" onClick={this.verifyCredentials.bind(this)}>
+            <button type="button" onClick={this.verifyCredentials}>
               Login
             </button>
             <Link to="/register">
