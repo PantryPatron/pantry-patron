@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import ListEntry from './ListEntry.jsx';
 import NavBar from './Navigation.jsx';
 
+
 class Lists extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -128,18 +130,18 @@ class Lists extends React.Component {
 
     return (
       <div className="text-center">
-        <NavBar {...this.props} />
-        <br />
-        <select id="list-select" defaultValue="x" onChange={this.handleListSelect}>
-          <option value="x" key="x"> Select </option>
-          <option value="new" key="new">New list</option>
+      <NavBar {...this.props} />
+
+        <select className="form-control" id="dropdown" data-live-search="true" defaultValue="x" onChange={this.handleListSelect}>
+          <option value='x' key='x'> Select </option>
+          <option value='new' key='new'>New list</option>
           {
-            this.state.userLists.map((list, index) =>
-              <option value={index} key={index}>{list.name}</option>)
+            this.state.userLists.map((list, index) => {
+              return ( <option value={index} key={index}>{list.name}</option> )
+            })
           }
         </select>
-        <br className="line-break" />
-        {display}
+
       </div>
     );
   }

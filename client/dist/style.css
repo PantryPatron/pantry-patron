@@ -2,6 +2,10 @@ body {
   background: #fff !important;
 }
 
+#dropdown {
+  margin: auto;
+  max-width: 300px;
+}
 
 .center {
   display: block;
@@ -62,5 +66,9 @@ body {
     margin-bottom: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+  }
+
+  tr, td {
+    text-align: center;
   }
 }
