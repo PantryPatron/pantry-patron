@@ -83,7 +83,7 @@ class ItemForm extends React.Component {
   render() {
     return(
 
-      <div>
+      <div align="center">
         <form>
           <input
             type="text"
@@ -91,10 +91,10 @@ class ItemForm extends React.Component {
             name="item"
             value={this.state.name}
             onChange={this.handleNameChange}/>
-          <button
-            type="button"
-            className="glyphicon glyphicon-plus"
-            onClick={()=> (this.handleSubmit())}></button>
+            <a href="#" onClick={()=> (this.handleSubmit())}>
+              <span className="glyphicon glyphicon-plus"></span>
+            </a>
+
         </form>
        </div>
     );
