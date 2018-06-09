@@ -7,6 +7,12 @@ body {
   max-width: 300px;
 }
 
+#table {
+    margin: auto;
+    max-width: 300px;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
 .center {
   display: block;
   margin-left: auto;
@@ -68,7 +74,4 @@ body {
     border-top-right-radius: 0;
   }
 
-  tr, td {
-    text-align: center;
-  }
 }

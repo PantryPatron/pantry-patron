@@ -92,7 +92,7 @@ class ItemForm extends React.Component {
             value={this.state.name}
             onChange={this.handleNameChange}/>
             <a href="#" onClick={()=> (this.handleSubmit())}>
-              <span class="glyphicon glyphicon-plus"></span>
+              <span className="glyphicon glyphicon-plus"></span>
             </a>
 
         </form>
