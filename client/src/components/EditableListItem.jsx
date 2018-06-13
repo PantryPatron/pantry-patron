@@ -1,4 +1,6 @@
-import React from 'react';
+/*
+comment
+*/import React from 'react';
 
 import ListItem from './Lists.jsx';
 import ItemForm from './ItemForm.jsx';
