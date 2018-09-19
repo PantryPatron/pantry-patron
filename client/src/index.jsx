@@ -49,7 +49,6 @@ class App extends React.Component {
       data: JSON.stringify(newUserCreds),
       success: (loc) => {
         console.log('New user information saved to db');
-        console.log(loc);
         callback(loc);
       },
       error: (err) => {
