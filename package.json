@@ -4,7 +4,7 @@
   "description": "Budget your shopping",
   "main": "server/index.js",
   "scripts": {
-    "test": "nodemon --inspect server/index.js",
+    "start": "nodemon --inspect server/index.js",
     "react-dev": "webpack --watch --mode=development",
     "react-prod": "webpack --mode=production",
     "eslint": "node ./node_modules/eslint/bin/eslint.js",

@@ -12,27 +12,38 @@ class Lists extends React.Component {
       userLists: this.props.lists || [],
       selectedList: { name: null, items: [] },
     };
-     /*
-      these two lines of code are presets.
-      !!!DO NOT DELETE this unless you want to refactor everything
 
-      basically we are taking advantage of how array only iterate through
-      numerical indexes
-     */
+    /*
+     these two lines of code are presets.
+     !!!DO NOT DELETE this unless you want to refactor everything
+
+     basically we are taking advantage of how array only iterate through
+     numerical indexes
+    */
+
     this.state.userLists.x = { name: null, items: [] };
     this.state.userLists.new = { name: 'new', items: [] };
     // thank you - I'm sorry for the small technical gotcha
-
+    this.updateThisList = this.updateThisList.bind(this);
     this.handleListSelect = this.handleListSelect.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
   componentDidMount() {
-  /*
-    When the component mounts we are setting an event listner that checks to see if the
-    lists dropdown is hovered over for more than 500 ms. This functionality allows for the lists
-    data to reset.
-  */
+    /*
+      When the component mounts we are setting an event listner that checks to see if the
+      lists dropdown is hovered over for more than 500 ms. This functionality allows for the lists
+      data to reset.
+    */
+    if (this.state.userLists.length <= 0) {
+      const localLists = JSON.parse(window.localStorage.getItem('pantrypatron-data')).lists;
+
+      if (localLists.length) {
+        localLists.x = { name: null, items: [] };
+        localLists.new = { name: 'new', items: [] };
+        this.setState({ userLists: localLists });
+      }
+    }
     $('#list-select').on('mouseover', () => {
       setTimeout(() => {
         if ($('#list-select').is(':hover')) {
@@ -57,25 +68,25 @@ class Lists extends React.Component {
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
-        newItem: newItem,
+        newItem,
         list: this.state.selectedList._id,
       }),
       success: (data) => {
         data = JSON.parse(data);
-        if(data[0].items === undefined) {
+        if (data[0].items === undefined) {
         } else {
-          let newState = this.state.selectedList;
+          const newState = this.state.selectedList;
           newState.items = data[0].items;
-          this.setState({selectedList: newState});
-          if(callback) {
-            callback(data[0].items)
+          this.setState({ selectedList: newState });
+          if (callback) {
+            callback(data[0].items);
           }
         }
       },
       error: (err) => {
         console.error(err);
-      }
-    })
+      },
+    });
   }
 
   /*
@@ -89,6 +100,9 @@ class Lists extends React.Component {
       listName = prompt('One cannot create a list with no name');
     }
 
+    if (Object.keys(user).length < 1) {
+      user = JSON.parse(localStorage.getItem('pantrypatron-data')).userData;
+    }
     const newList = {
       name: listName,
       user_id: user._id,
@@ -125,6 +139,26 @@ class Lists extends React.Component {
     this.setState({ selectedList: this.state.userLists[e.target.value] });
   }
 
+  updateThisList(newList) {
+    const { userLists } = this.state;
+    const newLists = [];
+
+    userLists.forEach((l) => {
+      if (l._id === newList._id) {
+        newLists.push(newList);
+      } else {
+        newLists.push(l);
+      }
+    });
+    const stateList = newLists;
+    newLists.x = { name: null, items: [] };
+    newLists.new = { name: 'new', items: [] };
+    this.props.update({ lists: newLists }, () => {
+      this.setState({ userLists: stateList, selectedList: newList });
+    });
+    //= ===================================
+  }
+
   render() {
     let display;
 
@@ -134,30 +168,34 @@ class Lists extends React.Component {
       });
     } else {
       display = this.state.selectedList.name !== null ?
-     <ListEntry
-      stores={this.props.stores}
-      update={this.props.update}
-      deleteList={this.onDeleteClick}
-      updateItem={this.updateList.bind(this)}
-      className='list'
-      list={this.state.selectedList}
-      createStore={this.props.createStore} />   :
-     <div id='warning'>Select a list from the<br/>from drop down menu<br/>Hover over drop down to<br/> get back to this</div>;
+        (<ListEntry
+          stores={this.props.stores}
+          update={this.props.update}
+          updateThisList={this.updateThisList}
+          deleteList={this.onDeleteClick}
+          updateItem={this.updateList.bind(this)}
+          className="list"
+          list={this.state.selectedList}
+          createStore={this.props.createStore}
+        />) :
+        <div id="warning">Select a list from the<br />from drop down menu<br />Hover over drop down to<br /> get back to this</div>;
     }
 
     return (
       <div className="text-center">
         <NavBar {...this.props} />
         <br />
-        <select data-live-search="true"
+        <select
+          data-live-search="true"
           className="form-control dropdown"
-          id="list-select" defaultValue="x"
-          onChange={this.handleListSelect}>
+          id="list-select"
+          defaultValue="x"
+          onChange={this.handleListSelect}
+        >
           <option value="x" key="x"> Select </option>
           <option value="new" key="new">New list</option>
           {
-            this.state.userLists.map((list, index) =>
-              <option value={index} key={index}>{list.name}</option>)
+            this.state.userLists.map((list, index) => <option value={index} key={index}>{list.name}</option>)
           }
         </select>
         <br className="line-break" />

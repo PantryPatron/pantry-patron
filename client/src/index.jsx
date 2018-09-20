@@ -49,7 +49,6 @@ class App extends React.Component {
       data: JSON.stringify(newUserCreds),
       success: (loc) => {
         console.log('New user information saved to db');
-        console.log(loc)
         callback(loc);
       },
       error: (err) => {
@@ -87,7 +86,6 @@ class App extends React.Component {
       data: JSON.stringify(newStoreNameObj),
       success: (data) => {
         this.getStores();
-
         if (callback) { callback(JSON.parse(data)); }
       },
       error: (err) => {
@@ -115,8 +113,10 @@ class App extends React.Component {
     });
   }
 
-  update(data) {
+  update(data, callback) {
+    console.log('updated');
     this.setState(data);
+    if (callback) callback();
   }
 
   /*
@@ -132,7 +132,8 @@ class App extends React.Component {
       data: JSON.stringify(credentials),
       success: (data) => {
         data = JSON.parse(data);
-        if(data.loc === '/') {
+        if (data.loc === '/') {
+          window.localStorage.setItem('pantrypatron-data', JSON.stringify(data));
           this.setState({ isLoggedIn: true });
           // //get user information
           this.setState({ lists: data.lists || [] });
@@ -193,7 +194,7 @@ class App extends React.Component {
             exact
             path="/register"
             render={props => <Register grabUserCredentials={this.sendNewUserCredentials.bind(this)} {...props} />
-          }
+            }
           />
           <Route exact path="/logout" render={props => <Login verify={this.verify} {...props} />} />
           <Route
