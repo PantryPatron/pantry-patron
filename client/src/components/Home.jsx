@@ -59,12 +59,10 @@ const Home = ({ user, history, props }) => {
       {/* END TIPS */}
     </div>
   );
-  console.log(localUser, 'test');
 
   if (user.username) {
     return display(user);
   } else if (localUser) {
-    console.log('local');
     return display(localUser);
   } else {
     history.push('/login');

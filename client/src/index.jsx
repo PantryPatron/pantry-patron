@@ -86,7 +86,6 @@ class App extends React.Component {
       data: JSON.stringify(newStoreNameObj),
       success: (data) => {
         this.getStores();
-
         if (callback) { callback(JSON.parse(data)); }
       },
       error: (err) => {
@@ -116,6 +115,7 @@ class App extends React.Component {
 
   update(data) {
     this.setState(data);
+    console.log('updated');
   }
 
   /*

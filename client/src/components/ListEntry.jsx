@@ -30,29 +30,47 @@ class ListEntry extends React.Component {
       let newStoreName = prompt('What store are you at?');
 
       while (newStoreName === '') {
-        newStoreName = prompt('Come on, where you at gurl?');
+        newStoreName = prompt('Where are you?');
       }
+      console.log('there');
 
       // create the object needed for endpoint call.
       this.props.createStore({ name: newStoreName }, (newStore) => {
         const updatedList = {};
         updatedList._id = this.state._id;
-        updatedList.name = this.state.name;
+        updatedList.name = this.props.list.name;
         updatedList.items = this.state.items;
         updatedList.total_price = this.state.total_price;
-        updatedList.store_id = { _id: newStore._id };
+        updatedList.store_id = { _id: newStore };
 
         // send it to the server to update current list
         this.updateList(updatedList);
         // update the stores on the client side.
         this.setState({ stores: this.state.stores.concat([newStore]) });
-        $('.store-selection').val(this.state.stores[this.state.stores.length -1]._id);
+        $('.store-selection').val(this.state.stores[this.state.stores.length - 1]._id);
       });
     } else {
-      (async () => {
-        await this.setState({ store_id: { _id: e.target.value } });
-        this.updateList(this.state);
-      })();
+      // (async () => {
+      //   await this.setState({ store_id: { _id: e.target.value } });
+      //   this.updateList(this.state);
+      // })();
+      console.log('here', e.target.value);
+      let storeInfo = {};
+
+      this.state.stores.forEach((s) => {
+        if (s._id === e.target.value) {
+          storeInfo = s;
+        }
+      });
+
+      console.log(storeInfo, 'info', this.props.list);
+      this.setState({
+        store_id: storeInfo,
+      });
+
+      this.updateList({
+        store_id: storeInfo, name: this.props.list.name, items: this.state.items, total_price: this.state.total_price, _id: this.state._id,
+      });
     }
   }
 
@@ -65,14 +83,14 @@ class ListEntry extends React.Component {
     */
     const oldItems = this.state.items;
     oldItems.forEach((item) => {
-      if(item._id === updatedItem._id) {
+      if (item._id === updatedItem._id) {
         item.name = updatedItem.item_id.name;
         item.quantity = updatedItem.quantity;
         item.price = updatedItem.price;
       }
     });
 
-    this.setState({items: oldItems});
+    this.setState({ items: oldItems });
   }
 
   updateList(updatedList) {
@@ -82,6 +100,8 @@ class ListEntry extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify(updatedList),
       success: () => {
+        console.log('list', updatedList);
+        this.props.updateThisList(updatedList);
         this.setState({ store_id: updatedList.store_id });
       },
       error: (err) => {
@@ -96,15 +116,15 @@ class ListEntry extends React.Component {
       <div>
         <h3>
           {this.props.list.name} total:
-            ${ this.state.items.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0).toFixed(2) }
+            ${this.state.items.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0).toFixed(2)}
         </h3>
         <br />
         <select className="form-control store-selection dropdown" onChange={this.handleStoreChange.bind(this)}>
           <option value="select" key="select">Stores</option>
           <option value="new" key="new">New store</option>
           {
-              this.state.stores.map((store, index) => <option value={store._id} key={index}>{store.name}</option>)
-            }
+            this.state.stores.map((store, index) => <option value={store._id} key={index}>{store.name}</option>)
+          }
         </select>
         <br />
         <br />
@@ -118,8 +138,8 @@ class ListEntry extends React.Component {
           </thead>
           <tbody>
             {
-                this.state.items.map(item => <ListItemEntry update={this.updateItem.bind(this)} key={item._id} item={item} />)
-              }
+              this.state.items.map(item => <ListItemEntry update={this.updateItem.bind(this)} key={item._id} item={item} />)
+            }
           </tbody>
         </table>
 

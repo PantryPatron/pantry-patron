@@ -8,13 +8,11 @@ import NavBar from './Navigation.jsx';
 class Lists extends React.Component {
   constructor(props) {
     super(props);
-    console.log(JSON.parse(window.localStorage.getItem('pantrypatron-data')).lists);
     this.state = {
       userLists: this.props.lists || [],
       selectedList: { name: null, items: [] },
     };
 
-    console.log(this.state.userLists);
     /*
      these two lines of code are presets.
      !!!DO NOT DELETE this unless you want to refactor everything
@@ -26,7 +24,7 @@ class Lists extends React.Component {
     this.state.userLists.x = { name: null, items: [] };
     this.state.userLists.new = { name: 'new', items: [] };
     // thank you - I'm sorry for the small technical gotcha
-
+    this.updateThisList = this.updateThisList.bind(this);
     this.handleListSelect = this.handleListSelect.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
@@ -102,6 +100,9 @@ class Lists extends React.Component {
       listName = prompt('One cannot create a list with no name');
     }
 
+    if (Object.keys(user).length < 1) {
+      user = JSON.parse(localStorage.getItem('pantrypatron-data')).userData;
+    }
     const newList = {
       name: listName,
       user_id: user._id,
@@ -138,7 +139,31 @@ class Lists extends React.Component {
     this.setState({ selectedList: this.state.userLists[e.target.value] });
   }
 
+  updateThisList(newList) {
+    console.log(newList, 'new');
+    const { userLists } = this.state;
+    const newLists = [];
+
+    userLists.forEach((l) => {
+      if (l._id === newList._id) {
+        newLists.push(newList);
+      } else {
+        newLists.push(l);
+      }
+    });
+
+    newLists.x = { name: null, items: [] };
+    newLists.new = { name: 'new', items: [] };
+    console.log(newLists);
+    this.props.update({ lists: newLists });
+    console.log('selected', this.state.selectedList);
+
+    this.setState({ userLists: newLists, selectedList: this.state.selectedList });
+  }
+
   render() {
+    console.log(this.state);
+
     let display;
 
     if (this.state.selectedList.name === 'new') {
@@ -150,6 +175,7 @@ class Lists extends React.Component {
         (<ListEntry
           stores={this.props.stores}
           update={this.props.update}
+          updateThisList={this.updateThisList}
           deleteList={this.onDeleteClick}
           updateItem={this.updateList.bind(this)}
           className="list"
@@ -173,10 +199,7 @@ class Lists extends React.Component {
           <option value="x" key="x"> Select </option>
           <option value="new" key="new">New list</option>
           {
-            this.state.userLists.map((list, index) => {
-              console.log(list);
-              return <option value={index} key={index}>{list.name}</option>;
-            })
+            this.state.userLists.map((list, index) => <option value={index} key={index}>{list.name}</option>)
           }
         </select>
         <br className="line-break" />
