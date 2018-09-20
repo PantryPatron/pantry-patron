@@ -81,15 +81,17 @@ class ListEntry extends React.Component {
         grab item index ref
           update item in the list array
     */
+
+    //  {"price":2.5,"quantity":2,"_id":"5ba302b932da663b2b190cf0","item_id":{"_id":"5ba302b932da663b2b190cef","name":"pans22111","__v":0},"__v":0,"name":"pans2211111112"}
     const oldItems = this.state.items;
     oldItems.forEach((item) => {
       if (item._id === updatedItem._id) {
-        item.name = updatedItem.item_id.name;
+        item.item_id.name = updatedItem.item_id.name;
         item.quantity = updatedItem.quantity;
         item.price = updatedItem.price;
       }
     });
-
+    this.updateList(Object.assign({}, this.state, { name: this.props.list.name }));
     this.setState({ items: oldItems });
   }
 
@@ -132,8 +134,8 @@ class ListEntry extends React.Component {
           <thead>
             <tr>
               <th>Item Name</th>
-              <th># of Items/Pounds</th>
-              <th>Price Per Item</th>
+              <th># of Items/lbs</th>
+              <th>Price Per Item/lbs</th>
             </tr>
           </thead>
           <tbody>

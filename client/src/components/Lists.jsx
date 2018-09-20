@@ -140,7 +140,6 @@ class Lists extends React.Component {
   }
 
   updateThisList(newList) {
-    console.log(newList, 'new');
     const { userLists } = this.state;
     const newLists = [];
 
@@ -151,19 +150,26 @@ class Lists extends React.Component {
         newLists.push(l);
       }
     });
-
+    const stateList = newLists;
     newLists.x = { name: null, items: [] };
     newLists.new = { name: 'new', items: [] };
-    console.log(newLists);
-    this.props.update({ lists: newLists });
-    console.log('selected', this.state.selectedList);
-
-    this.setState({ userLists: newLists, selectedList: this.state.selectedList });
+    console.log('almost updated');
+    this.props.update({ lists: newLists }, () => {
+      console.log(newList, 'do you print');
+      this.setState({ userLists: stateList, selectedList: newList });
+    });
+    //= ===================================
   }
 
   render() {
-    console.log(this.state);
-
+    console.log(`
+      /////////////////////////////////////////////////
+      /////     state ${JSON.stringify(this.state)}***********
+      /////
+      /////
+      /////
+      /////////////////////////////////////////////////
+    `);
     let display;
 
     if (this.state.selectedList.name === 'new') {

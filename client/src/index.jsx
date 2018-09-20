@@ -113,9 +113,10 @@ class App extends React.Component {
     });
   }
 
-  update(data) {
-    this.setState(data);
+  update(data, callback) {
     console.log('updated');
+    this.setState(data);
+    if (callback) callback();
   }
 
   /*
