@@ -153,23 +153,13 @@ class Lists extends React.Component {
     const stateList = newLists;
     newLists.x = { name: null, items: [] };
     newLists.new = { name: 'new', items: [] };
-    console.log('almost updated');
     this.props.update({ lists: newLists }, () => {
-      console.log(newList, 'do you print');
       this.setState({ userLists: stateList, selectedList: newList });
     });
     //= ===================================
   }
 
   render() {
-    console.log(`
-      /////////////////////////////////////////////////
-      /////     state ${JSON.stringify(this.state)}***********
-      /////
-      /////
-      /////
-      /////////////////////////////////////////////////
-    `);
     let display;
 
     if (this.state.selectedList.name === 'new') {

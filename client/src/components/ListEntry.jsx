@@ -32,7 +32,6 @@ class ListEntry extends React.Component {
       while (newStoreName === '') {
         newStoreName = prompt('Where are you?');
       }
-      console.log('there');
 
       // create the object needed for endpoint call.
       this.props.createStore({ name: newStoreName }, (newStore) => {
@@ -54,7 +53,6 @@ class ListEntry extends React.Component {
       //   await this.setState({ store_id: { _id: e.target.value } });
       //   this.updateList(this.state);
       // })();
-      console.log('here', e.target.value);
       let storeInfo = {};
 
       this.state.stores.forEach((s) => {
@@ -63,7 +61,6 @@ class ListEntry extends React.Component {
         }
       });
 
-      console.log(storeInfo, 'info', this.props.list);
       this.setState({
         store_id: storeInfo,
       });
@@ -102,7 +99,6 @@ class ListEntry extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify(updatedList),
       success: () => {
-        console.log('list', updatedList);
         this.props.updateThisList(updatedList);
         this.setState({ store_id: updatedList.store_id });
       },
